@@ -43,7 +43,7 @@ def load_freqs(lang=DEFAULT_LANG):
     return freqs
 
 
-def load_words(filepath=None, lang=DEFAULT_LANG):
+def load_words(lang=DEFAULT_LANG, filepath=None):
     if not filepath:
         filepath = get_filepath("words", lang)
 
@@ -67,6 +67,24 @@ def count_letters(data):
     return counts
 
 
+def letter_frequencies(data, lang=DEFAULT_LANG):
+    """Calculate the letter frequencies in a text.
+
+    Args:
+        data: The text to be analyzed.
+        lang: The language to compare to.
+
+    Returns:
+        A dictionary of letters with frequencies.
+    """
+    counts = count_letters(data)
+    n = sum(counts.values())
+    if not n:
+        print("=> ERROR: No alpha characters in input.")
+        sys.exit()
+    return {k: v / n for k, v in counts.items()}
+
+
 def std_dev(data, lang=DEFAULT_LANG):
     """Calculate standard deviation from average letter frequencies.
 
@@ -78,21 +96,17 @@ def std_dev(data, lang=DEFAULT_LANG):
         The letter frequencies' standard deviation from the specified language.
     """
     # TODO: calculate this properly
-    freqs = load_freqs(lang)
-    counts = count_letters(data)
-    n = sum(counts.values())
-
-    if not n:
-        return -1
+    lang_freq = load_freqs(lang=lang)
+    observed_freq = letter_frequencies(data, lang=lang)
 
     variance = 0.0
     for c in string.ascii_lowercase:
-        variance += (freqs[c] - (counts[c] / float(n))) ** 2
+        variance += (lang_freqs[c] - observed_freq[c]) ** 2
     
     return math.sqrt(variance), n
 
 
-def count_words(data, words):
+def count_words(data, lang=DEFAULT_LANG, filepath=None):
     """Calculate the approximate number of 3+ letter words in a text.
 
     This function is not accurate, as it has been designed for texts with all
@@ -106,14 +120,14 @@ def count_words(data, words):
     Returns:
         The approximate number of 3+ letter words.
     """
+    words = load_words(lang=lang, filepath=filepath)
     data = "".join(data.split())
 
     count = 0
     i = 0
     while i < len(data):
-        for l in range(12, 3, -1):
+        for l in range(12, 2, -1):
             if i + l < len(data) and data[i:i + l].lower() in words:
-                print(data[i:i + l].lower())
                 count += 1
                 i += l - 1
                 break
@@ -127,8 +141,7 @@ def fa(data, args):
 
 
 def wc(data, args):
-    words = load_words(filepath=args.dictionary, lang=args.language)
-    count = count_words(data, words)
+    count = count_words(data, lang=args.language, filepath=args.dictionary)
     print(count)
 
 
