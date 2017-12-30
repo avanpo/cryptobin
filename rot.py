@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+"""Rotation utilities.
+"""
+
 import argparse
 import sys
 
@@ -28,6 +31,15 @@ def rot_char(c, key):
 
 
 def rotate(data, key):
+    """Rotate the text by a given integer.
+
+    Args:
+        data: The text to be rotated.
+        key: The integer value to rotate by.
+
+    Returns:
+        The rotated text.
+    """
     text = []
     for c in data:
         text += rot_char(c, key)
@@ -35,6 +47,16 @@ def rotate(data, key):
 
 
 def bruteforce(data, lang=plaintext.DEFAULT_LANG):
+    """Attempt to recover the plaintext using frequency analysis.
+
+    Args:
+        data: The ciphertext to be analyzed.
+        lang: The language of the plaintext.
+
+    Returns:
+        A list of all rotations of the text, ordered by standard deviation
+        from the language averages.
+    """
     data = "".join(data.split())
     sols = []
     for i in range(0, 26):

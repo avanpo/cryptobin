@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+"""Plaintext utilities.
+"""
+
 import argparse
 import math
 import os
@@ -66,6 +69,13 @@ def count_letters(data):
 
 def std_dev(data, lang=DEFAULT_LANG):
     """Calculate standard deviation from average letter frequencies.
+
+    Args:
+        data: The text to be analyzed.
+        lang: The language to compare to.
+
+    Returns:
+        The letter frequencies' standard deviation from the specified language.
     """
     # TODO: calculate this properly
     freqs = load_freqs(lang)
@@ -88,6 +98,13 @@ def count_words(data, words):
     This function is not accurate, as it has been designed for texts with all
     punctuation and spacing removed. It does not properly handle conjugation
     or spacing. It should, however, be good enough for basic cryptanalysis.
+
+    Args:
+        data: The text to be analyzed.
+        lang: The language to compare to.
+
+    Returns:
+        The approximate number of 3+ letter words.
     """
     data = "".join(data.split())
 

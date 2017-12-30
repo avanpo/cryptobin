@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+"""Vigenere cipher utilities.
+"""
+
 import argparse
 import itertools
 import math
@@ -38,11 +41,21 @@ def stagger_join(parts):
     return "".join("".join(x) for x in itertools.zip_longest(*parts, fillvalue=""))
 
 
-def bruteforce(data, l=10, lang=plaintext.DEFAULT_LANG):
+def bruteforce(data, max_length=10, lang=plaintext.DEFAULT_LANG):
+    """Attempt to brute force the solution to a Vigenere ciphertext.
+
+    Args:
+        data: The ciphertext to be analyzed.
+        max_length: The max length of the key.
+        lang: The language of the plaintext.
+
+    Returns:
+        A list of the most likely plaintexts for each key length.
+    """
     data = [strstrip(line) for line in data]
 
     sols = []
-    for i in range(2, l + 1):
+    for i in range(2, max_length + 1):
         split = stagger_split(data, i)
         parts = []
         for s in split:
