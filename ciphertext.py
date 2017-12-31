@@ -11,7 +11,7 @@ import plaintext
 
 parser = argparse.ArgumentParser(description="ciphertext tools")
 parser.add_argument("command", metavar="COMMAND",
-                    help=("the command to run. currently supported commands"
+                    help=("the command to run. currently supported commands "
                           "include: fa"))
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the plaintext file to be analyzed")

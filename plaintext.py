@@ -106,8 +106,8 @@ def std_dev(data, lang=DEFAULT_LANG):
     return math.sqrt(variance), n
 
 
-def count_words(data, lang=DEFAULT_LANG, filepath=None):
-    """Calculate the approximate number of 3+ letter words in a text.
+def count_words(data, n=3, lang=DEFAULT_LANG, filepath=None):
+    """Calculate the approximate number of n+ letter words in a text.
 
     This function is not accurate, as it has been designed for texts with all
     punctuation and spacing removed. It does not properly handle conjugation
@@ -118,7 +118,7 @@ def count_words(data, lang=DEFAULT_LANG, filepath=None):
         lang: The language to compare to.
 
     Returns:
-        The approximate number of 3+ letter words.
+        The approximate number of n+ letter words.
     """
     words = load_words(lang=lang, filepath=filepath)
     data = "".join(data.split())
@@ -126,7 +126,7 @@ def count_words(data, lang=DEFAULT_LANG, filepath=None):
     count = 0
     i = 0
     while i < len(data):
-        for l in range(12, 2, -1):
+        for l in range(12, n - 1, -1):
             if i + l < len(data) and data[i:i + l].lower() in words:
                 count += 1
                 i += l - 1
