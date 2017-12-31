@@ -41,6 +41,7 @@ import sys
 
 import plaintext
 import rot
+import utils
 
 parser = argparse.ArgumentParser(description=(
     "vigenere cipher tools. with no arguments this tool attempts to break"
@@ -136,14 +137,7 @@ def vigenere(data, args):
 
 
 def main():
-    args = parser.parse_args()
-    if args.file:
-        with open(args.file) as f:
-            data = f.readlines()
-    elif not sys.stdin.isatty():
-        data = sys.stdin.readlines()
-    else:
-        parser.error("no input found")
+    args, data = utils.parse_args(parser, lines=True)
     vigenere(data, args)
 
 

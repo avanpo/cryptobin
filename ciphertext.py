@@ -12,6 +12,7 @@ import string
 import sys
 
 import plaintext
+import utils
 
 parser = argparse.ArgumentParser(description="ciphertext tools")
 parser.add_argument("command", metavar="COMMAND",
@@ -36,6 +37,12 @@ def print_fa(observed_freq, lang_freq):
                                            l, lang_freq[l]))
 
 
+def fa(data, args):
+    observed_freq = plaintext.letter_frequencies(data)
+    lang_freq = plaintext.load_freqs(args.language)
+    print_fa(observed_freq, lang_freq)
+
+
 def counts(data, args):
     la, ua, nr, p, w, np = 0, 0, 0, 0, 0, 0
     for c in data:
@@ -57,21 +64,8 @@ def counts(data, args):
     print("   %6d | %6d | %6d | %6d | %6d | %8d" % (la, ua, nr, p, w, np))
 
 
-def fa(data, args):
-    observed_freq = plaintext.letter_frequencies(data)
-    lang_freq = plaintext.load_freqs(args.language)
-    print_fa(observed_freq, lang_freq)
-
-
 def main():
-    args = parser.parse_args()
-    if args.file:
-        with open(args.file) as f:
-            data = f.read()
-    elif not sys.stdin.isatty():
-        data = sys.stdin.read()
-    else:
-        parser.error("no input file found")
+    args, data = utils.parse_args(parser)
 
     if args.command == "fa":
         fa(data, args)
