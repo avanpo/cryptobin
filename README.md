@@ -10,4 +10,8 @@ A suite of crypto and puzzle tools. The project aims to provide utils that can b
   * **fa** calculate standard deviation from language letter frequences
   * **wc** approximate word count in plaintext body
 * **rot.py** [-h] [-k KEY] [-n NUMBER] [-l LANGUAGE] [FILE]
+  * solves the caesar cipher, or rotates text by a given key
+* **submap.py** [-h] [-d DEPTH] [-f LETTER_DEPTH] [-l LANGUAGE] [-r REPLACE] [FILE]
+  * solves monoalphabetic simple substitution ciphers, or swaps letters
 * **vigenere.py** [-h] [-m MAX_LENGTH] [-l LANGUAGE] [FILE]
+  * solves vigenere ciphers
