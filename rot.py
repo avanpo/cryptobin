@@ -7,6 +7,7 @@ import argparse
 import sys
 
 import plaintext
+import utils
 
 parser = argparse.ArgumentParser(description=(
     "text rotation util. without the --key argument, this tool uses frequency"
@@ -78,14 +79,7 @@ def rot(data, args):
 
 
 def main():
-    args = parser.parse_args()
-    if args.file:
-        with open(args.file) as f:
-            data = f.read()
-    elif not sys.stdin.isatty():
-        data = sys.stdin.read()
-    else:
-        parser.error("no input found")
+    args, data = utils.parse_args(parser)
     rot(data, args)
 
 

@@ -12,7 +12,7 @@ A suite of crypto and puzzle tools. The project aims to provide utils that can b
   * **wc** approximate word count in plaintext body
 * **rot.py** [-h] [-k KEY] [-n NUMBER] [-l LANGUAGE] [FILE]
   * solves the caesar cipher, or rotates text by a given key
-* **submap.py** [-h] [-d DEPTH] [-f LETTER_DEPTH] [-l LANGUAGE] [-r REPLACE] [FILE]
+* **submap.py** [-h] [-d DEPTH] [-e LETTER_DEPTH] [-l LANGUAGE] [-r REPLACE] [FILE]
   * solves simple monoalphabetic substitution ciphers, or swaps letters
 * **vigenere.py** [-h] [-i MIN_LENGTH] [-m MAX_LENGTH] [-k] [-n NUMBER] [-l LANGUAGE] [FILE]
   * breaks the vigenere cipher

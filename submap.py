@@ -8,13 +8,14 @@ import string
 import sys
 
 import plaintext
+import utils
 
 parser = argparse.ArgumentParser(description="reverse substitution map cipher")
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the input file")
 parser.add_argument("-d", "--depth", type=int, default=5,
                     help="the depth of the breadth first search")
-parser.add_argument("-f", "--letter-depth", type=int, default=18,
+parser.add_argument("-e", "--letter-depth", type=int, default=18,
                     help=("the number of letters to attempt to swap around, "
                           "ordered by observed frequency"))
 parser.add_argument("-l", "--language", type=str,
@@ -135,14 +136,7 @@ def submap(data, args):
 
 
 def main():
-    args = parser.parse_args()
-    if args.file:
-        with open(args.file) as f:
-            data = f.read()
-    elif not sys.stdin.isatty():
-        data = sys.stdin.read()
-    else:
-        parser.error("no input found")
+    args, data = utils.parse_args(parser)
     submap(data, args)
 
 
