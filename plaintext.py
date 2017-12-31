@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
 """Plaintext utilities.
+
+Usage:
+
+See the --help option for usage information.
 """
 
 import argparse
@@ -67,7 +71,7 @@ def count_letters(data):
     return counts
 
 
-def letter_frequencies(data, lang=DEFAULT_LANG):
+def letter_frequencies(data):
     """Calculate the letter frequencies in a text.
 
     Args:
@@ -97,13 +101,13 @@ def std_dev(data, lang=DEFAULT_LANG):
     """
     # TODO: calculate this properly
     lang_freq = load_freqs(lang=lang)
-    observed_freq = letter_frequencies(data, lang=lang)
+    observed_freq = letter_frequencies(data)
 
     variance = 0.0
     for c in string.ascii_lowercase:
-        variance += (lang_freqs[c] - observed_freq[c]) ** 2
+        variance += (lang_freq[c] - observed_freq[c]) ** 2
     
-    return math.sqrt(variance), n
+    return math.sqrt(variance)
 
 
 def count_words(data, n=3, lang=DEFAULT_LANG, filepath=None):

@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 
 """Ciphertext utilities.
+
+Usage:
+
+See the --help option for usage information.
 """
 
 import argparse
@@ -33,7 +37,7 @@ def print_fa(observed_freq, lang_freq):
 
 
 def fa(data, args):
-    observed_freq = plaintext.letter_frequencies(data, args.language)
+    observed_freq = plaintext.letter_frequencies(data)
     lang_freq = plaintext.load_freqs(args.language)
     print_fa(observed_freq, lang_freq)
 
