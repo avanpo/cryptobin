@@ -54,7 +54,9 @@ parser.add_argument("-i", "--min-length", type=int, default=2,
 parser.add_argument("-m", "--max-length", type=int, default=10,
                     help="the maximum key length to try (default: 10)")
 parser.add_argument("-k", "--key", action="store_true",
-                    help="break the encryption and return the key")
+                    help="recover the encryption key")
+parser.add_argument("-n", "--number", type=int, default=1,
+                    help="number of results to show (default: 1)")
 parser.add_argument("-l", "--language", type=str,
                     default=plaintext.DEFAULT_LANG,
                     help=("the language being analyzed, in ISO 639-1 "
@@ -85,6 +87,7 @@ def stagger_join(data, parts):
                 output.append(p[indexes[j]])
                 indexes[j] += 1
                 i -= 1
+        output.append("\n")
     return "".join(output)
 
 
@@ -118,16 +121,18 @@ def bruteforce(data, min_length=2, max_length=10, lang=plaintext.DEFAULT_LANG):
         wc = plaintext.count_words(sol)
         sols.append((sol, "".join(key), wc))
 
-    return [(s, k) for s, k, wc in sorted(sols, key=lambda x: x[1], reverse=True)]
+    return [(s, k) for s, k, wc in sorted(sols, key=lambda x: x[2], reverse=True)]
 
 
 def vigenere(data, args):
     sols = bruteforce(data, args.min_length, args.max_length,
                       lang=args.language)
     if args.key:
-        print(sols[0][1])
+        for sol in sols[:args.number]:
+            print(sols[0][1])
     else:
-        print(sols[0][0])
+        for sol in sols[:args.number]:
+            print(sols[0][0], end="")
 
 
 def main():

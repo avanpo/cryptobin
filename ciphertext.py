@@ -36,6 +36,27 @@ def print_fa(observed_freq, lang_freq):
                                            l, lang_freq[l]))
 
 
+def counts(data, args):
+    la, ua, nr, p, w, np = 0, 0, 0, 0, 0, 0
+    for c in data:
+        if c in string.ascii_lowercase:
+            la += 1
+        elif c in string.ascii_uppercase:
+            ua += 1
+        elif c in string.digits:
+            nr += 1
+        elif c in string.punctuation:
+            p += 1
+        elif c in string.whitespace:
+            w += 1
+        else:
+            np += 1
+    print("=> Character class counts")
+    print("   lalpha | ualpha |  digit |   punc | wspace | nonprint")
+    print("   -------+--------+--------+--------+--------+---------")
+    print("   %6d | %6d | %6d | %6d | %6d | %8d" % (la, ua, nr, p, w, np))
+
+
 def fa(data, args):
     observed_freq = plaintext.letter_frequencies(data)
     lang_freq = plaintext.load_freqs(args.language)
@@ -54,6 +75,8 @@ def main():
 
     if args.command == "fa":
         fa(data, args)
+    elif args.command == "counts":
+        counts(data, args)
     else:
         parser.error("command not recognized")
 
