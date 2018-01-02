@@ -59,7 +59,7 @@ parser.add_argument("-k", "--key", action="store_true",
 parser.add_argument("-n", "--number", type=int, default=1,
                     help="number of results to show (default: 1)")
 parser.add_argument("-l", "--language", type=str,
-                    default=plaintext.DEFAULT_LANG,
+                    default=utils.DEFAULT_LANG,
                     help=("the language being analyzed, in ISO 639-1 "
                           "(default: en)"))
 
@@ -92,7 +92,7 @@ def stagger_join(data, parts):
     return "".join(output)
 
 
-def bruteforce(data, min_length=2, max_length=10, lang=plaintext.DEFAULT_LANG):
+def bruteforce(data, min_length=2, max_length=10, lang=utils.DEFAULT_LANG):
     """Attempt to bruteforce the solution to a Vigenere ciphertext.
 
     Newlines are assumed to 'reset' the key.
@@ -114,12 +114,12 @@ def bruteforce(data, min_length=2, max_length=10, lang=plaintext.DEFAULT_LANG):
         parts = []
         key = []
         for s in split:
-            part_sols = rot.bruteforce(s, lang)
+            part_sols = rot.bruteforce(s, lang=lang)
             parts.append(part_sols[0])
             key_char = chr((26 + ord(s[0]) - ord(part_sols[0][0])) % 26 + 65)
             key.append(key_char)
         sol = stagger_join(data, parts)
-        wc = plaintext.count_words(sol)
+        wc = plaintext.count_words(sol, lang=lang)
         sols.append((sol, "".join(key), wc))
 
     return [(s, k) for s, k, wc in sorted(sols, key=lambda x: x[2], reverse=True)]

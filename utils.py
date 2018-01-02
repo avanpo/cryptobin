@@ -1,7 +1,14 @@
 import sys
 
+DEFAULT_LANG = "en"
 
-def read_file(filepath, lines=False):
+
+def get_lang_filepath(prefix, lang):
+    lib_dir = os.path.dirname(__file__)
+    return os.path.join(lib_dir, "lang/%s_%s.txt" % (prefix, lang))
+
+
+def read_file(filepath, lines=False, encoding="UTF-8"):
     try:
         with open(filepath) as f:
             if lines:
