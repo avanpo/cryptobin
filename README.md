@@ -4,6 +4,8 @@ A suite of crypto and puzzle tools. The project aims to provide utils that can b
 
 ### tools
 
+* **cdiff.py** [-h] [-i] FILE FILE [FILE ...]
+  * character diff utils
 * **ciphertext.py** [-h] [-l LANGUAGE] COMMAND [FILE]
   * **fa** analyze letter frequency for alphabetic ciphers
   * **counts** count char types
