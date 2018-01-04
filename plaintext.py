@@ -139,14 +139,7 @@ def wc(data, args):
 
 
 def main():
-    args = parser.parse_args()
-    if args.file:
-        with open(args.file) as f:
-            data = f.read()
-    elif not sys.stdin.isatty():
-        data = sys.stdin.read()
-    else:
-        parser.error("no input file found")
+    args, data = utils.parse_args(parser)
 
     if args.command == "fa":
         fa(data, args)
