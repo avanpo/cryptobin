@@ -17,11 +17,11 @@ import utils
 parser = argparse.ArgumentParser(description="ciphertext tools")
 parser.add_argument("command", metavar="COMMAND",
                     help=("the command to run. currently supported commands "
-                          "include: fa"))
+                          "include: counts, fa"))
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the plaintext file to be analyzed")
 parser.add_argument("-l", "--language", type=str,
-                    default=plaintext.DEFAULT_LANG,
+                    default=utils.DEFAULT_LANG,
                     help=("the language being analyzed, in ISO 639-1"
                           "(default: en)"))
 

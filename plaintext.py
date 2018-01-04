@@ -13,52 +13,39 @@ import os
 import string
 import sys
 
-DEFAULT_LANG = "en"
+import utils
 
 parser = argparse.ArgumentParser(description="plaintext tools")
 parser.add_argument("command", metavar="COMMAND",
                     help="the command to run. currently supported commands include: fa, wc")
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the plaintext file to be analyzed")
-parser.add_argument("-l", "--language", type=str, default=DEFAULT_LANG,
+parser.add_argument("-l", "--language", type=str, default=utils.DEFAULT_LANG,
                     help="the language being analyzed, in ISO 639-1 (default: en)")
 parser.add_argument("-d", "--dictionary",
                     help="the path of the dictionary to use (example: /usr/share/dict/words)")
 
 
-def get_filepath(prefix, lang):
-    lib_dir = os.path.dirname(__file__)
-    return os.path.join(lib_dir, "lang/%s_%s.txt" % (prefix, lang))
+def load_freqs(lang=utils.DEFAULT_LANG):
+    filepath = utils.get_lang_filepath("freq", lang)
 
-
-def load_freqs(lang=DEFAULT_LANG):
-    filepath = get_filepath("freq", lang)
-
+    data = utils.read_file(filepath, lines=True)
     freqs = {}
-    try:
-        with open(filepath) as f:
-            for line in f:
-                c, val = line.split()
-                freqs[c] = float(val)
-    except EnvironmentError:
-        print("=> ERROR: Could not open %s." % filepath)
-        sys.exit()
+    for line in data:
+        c, val = line.strip().split()
+        freqs[c] = float(val)
 
     return freqs
 
 
-def load_words(lang=DEFAULT_LANG, filepath=None):
+def load_words(lang=utils.DEFAULT_LANG, filepath=None):
     if not filepath:
-        filepath = get_filepath("words", lang)
+        filepath = utils.get_lang_filepath("words", lang)
 
+    data = utils.read_file(filepath, lines=True)
     words = set()
-    try:
-        with open(filepath) as f:
-            for line in f:
-                words.add(line.strip())
-    except EnvironmentError:
-        print("=> ERROR: Could not open %s." % filepath)
-        sys.exit()
+    for line in data:
+        words.add(line.strip())
 
     return words
 
@@ -76,7 +63,6 @@ def letter_frequencies(data):
 
     Args:
         data: The text to be analyzed.
-        lang: The language to compare to.
 
     Returns:
         A dictionary of letters with frequencies.
@@ -89,7 +75,7 @@ def letter_frequencies(data):
     return {k: v / n for k, v in counts.items()}
 
 
-def std_dev(data, lang=DEFAULT_LANG):
+def std_dev(data, lang=utils.DEFAULT_LANG):
     """Calculate standard deviation from average letter frequencies.
 
     Args:
@@ -110,7 +96,7 @@ def std_dev(data, lang=DEFAULT_LANG):
     return math.sqrt(variance)
 
 
-def count_words(data, n=3, lang=DEFAULT_LANG, filepath=None):
+def count_words(data, n=3, lang=utils.DEFAULT_LANG, filepath=None):
     """Calculate the approximate number of n+ letter words in a text.
 
     This function is not accurate, as it has been designed for texts with all
@@ -119,7 +105,10 @@ def count_words(data, n=3, lang=DEFAULT_LANG, filepath=None):
 
     Args:
         data: The text to be analyzed.
-        lang: The language to compare to.
+        n: The minimum number of letters in a word. If this is 1, "iiiii" will
+        be 5 words (default: 3).
+        lang: The language to compare to (default: en).
+        filepath: Use a different dictionary (default: None).
 
     Returns:
         The approximate number of n+ letter words.
@@ -140,8 +129,8 @@ def count_words(data, n=3, lang=DEFAULT_LANG, filepath=None):
 
 
 def fa(data, args):
-    lscore, ln = std_dev(data, args.language)
-    print("%.4f" % lscore)
+    score = std_dev(data, args.language)
+    print("%.4f" % score)
 
 
 def wc(data, args):
