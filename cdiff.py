@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(
     description=("diff tools, on character level.")
 )
 parser.add_argument("files", metavar="FILES", nargs="*",
-                    help="the file to be analyzed")
+                    help="the files to be analyzed")
 parser.add_argument("-i", "--case-insensitive", action="store_true",
                     default=False, help="ignore case")
 
@@ -60,17 +60,20 @@ def letters(data1, data2, case_insensitive=False):
 
 def print_diff(data1, data2, diff):
     for i in range(0, len(diff), 64):
-        print(data1[i:i + 64])
-        print(data2[i:i + 64])
-        print("-" * 64)
-        print(diff[i:i + 64])
+        l = min(len(diff[i:]), 64)
+        print(data1[i:l])
+        print(data2[i:l])
+        print("-" * l)
+        print(diff[i:l])
         print()
 
 
 def cdiff(data, args):
     if len(data) == 2:
-        diff = letters(data[0], data[1], args.case_insensitive)
-        print_diff(data[0], data[1], diff)
+        d1 = data[0].strip()
+        d2 = data[1].strip()
+        diff = letters(d1, d2, args.case_insensitive)
+        print_diff(d1, d2, diff)
     elif len(data) > 2:
         print("not implemented yet")
 
