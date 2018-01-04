@@ -58,7 +58,6 @@ def bruteforce(data, lang=plaintext.DEFAULT_LANG):
         A list of all rotations of the text, ordered by standard deviation
         from the language averages.
     """
-    data = "".join(data.split())
     sols = []
     for i in range(0, 26):
         text = rotate(data, i)
@@ -69,12 +68,13 @@ def bruteforce(data, lang=plaintext.DEFAULT_LANG):
 
 
 def rot(data, args):
+    data = data.strip()
     if args.key:
         output = rotate(data, args.key)
-        print(output, end="")
+        print(output)
     else:
         sols = bruteforce(data, args.language)
-        for i in range(0, min(args.number, 25)):
+        for i in range(0, min(args.number, 26)):
             print(sols[i])
 
 
