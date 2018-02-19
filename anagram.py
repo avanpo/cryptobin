@@ -11,15 +11,20 @@ import utils
 parser = argparse.ArgumentParser(description="anagram search util")
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the file (anagram) to test")
+parser.add_argument("-w", "--words", type=int, default=1,
+                    help="the max number of words in the anagram")
 parser.add_argument("-u", "--unknown", type=int, default=0,
                     help="the number of unknown letters")
+parser.add_argument("-l", "--language", type=str, default=utils.DEFAULT_LANG,
+                    help="the language being analyzed, in ISO 639-1 (default: "
+                    "en)")
 
 
-def load_anagrams():
-    words = dictionary.load()
+def load_anagrams(lang=utils.DEFAULT_LANG):
+    words = dictionary.load(lang=lang)
     anagrams = {}
     for w in words:
-        sw = "".join(sorted(w))
+        sw = "".join(sorted([i.lower() for i in w if i.isalpha()]))
         if sw in anagrams:
             anagrams[sw].append(w)
         else:
@@ -27,16 +32,10 @@ def load_anagrams():
     return anagrams
 
 
-def generate_anagram_prefixes(anagrams, l):
-    anagram_prefixes = set()
-    for a in anagrams:
-        anagram_prefixes.add(a[:l])
-    return anagram_prefixes
-
-
 def search_anagrams(anagrams, partial, unknown):
     sols = []
-    for letters in map("".join, itertools.product(string.ascii_lowercase, repeat=unknown)):
+    for letters in map("".join, itertools.product(string.ascii_lowercase,
+                                                  repeat=unknown)):
         sorted_str = "".join(sorted(partial + letters))
         if sorted_str in anagrams:
             sols.append(sorted_str)
@@ -45,12 +44,12 @@ def search_anagrams(anagrams, partial, unknown):
 
 def anagram(data, args):
     data = "".join(data.split())
-    anagrams = load_anagrams()
+    anagrams = load_anagrams(lang=args.language)
 
     sols = search_anagrams(anagrams, data, args.unknown)
     print("=> possible anagrams:")
     for s in sols:
-        print("%s: %s" % (s, " ".join(anagrams[s])))
+        print("%s: %s" % (s, ",".join(anagrams[s])))
 
 
 def main():
