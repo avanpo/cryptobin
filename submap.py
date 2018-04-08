@@ -19,7 +19,7 @@ parser.add_argument("-e", "--letter-depth", type=int, default=18,
                     help=("the number of letters to attempt to swap around, "
                           "ordered by observed frequency"))
 parser.add_argument("-l", "--language", type=str,
-                    default=plaintext.DEFAULT_LANG,
+                    default=utils.DEFAULT_LANG,
                     help=("the language being analyzed, in ISO 639-1 (default: "
                           "en)"))
 parser.add_argument("-r", "--replace", type=str,
@@ -90,7 +90,7 @@ def replace(data, r1, r2):
     return "".join([swap.get(c, c) for c in data])
 
 
-def bruteforce(data, depth, letter_depth=18, lang=plaintext.DEFAULT_LANG):
+def bruteforce(data, depth, letter_depth=18, lang=utils.DEFAULT_LANG):
     """Recover the plaintext from a ciphertext using a letter
     substitution map.
 
