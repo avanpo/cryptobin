@@ -8,29 +8,28 @@ See the --help option for usage information.
 
 Background:
 
-A Vigenere cipher is a polyalphabetic substitution cipher, meaning
-that one character may map to many other characters. The Vigenere
-cipher works by using a repeating key of a certain length, which is
-used to rotate each character in the plaintext. For example, one can
-encrypt the following plaintext using the key 'ZEBRA':
+A Vigenere cipher is a polyalphabetic substitution cipher, meaning that one
+character may map to many other characters. The Vigenere cipher works by using a
+repeating key of a certain length, which is used to rotate each character in the
+plaintext. For example, one can encrypt the following plaintext using the key
+'ZEBRA':
 
     plaintext:  A T T A C K A T D A W N
     key:        Z E B R A Z E B R A Z E
     -----------------------------------
     ciphertext: Z X U R C J E U U A V R
 
-The repeating nature of the key makes this cipher easy to break. For a
-key of length 5, every fifth letter will be rotated using the same
-letter, just like the Caesar cipher, which is easy to break using
-frequency analysis. Thus the Vigenere cipher can be seen as multiple
-interwoven Caesar ciphers, each with a different key.
+The repeating nature of the key makes this cipher easy to break. For a key of
+length 5, every fifth letter will be rotated using the same letter, just like
+the Caesar cipher, which is easy to break using frequency analysis. Thus the
+Vigenere cipher can be seen as multiple interwoven Caesar ciphers, each with a
+different key.
 
-Breaking the Vigenere cipher is therefore simply a matter of unweaving
-these Caesar ciphers, breaking them individually, and putting the
-results back together. If the length of the key is not known, this
-needs to be done for every possible key length. This is what this tool
-does. To be effective, a sufficiently large ciphertext needs to be
-provided.
+Breaking the Vigenere cipher is therefore simply a matter of unweaving these
+Caesar ciphers, breaking them individually, and putting the results back
+together. If the length of the key is not known, this needs to be done for every
+possible key length. This is what this tool does. To be effective, a
+sufficiently large ciphertext needs to be provided.
 """
 
 import argparse
@@ -41,7 +40,7 @@ import sys
 
 import plaintext
 import rot
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(description=(
     "vigenere cipher tools. with no arguments this tool attempts to break"
@@ -59,7 +58,7 @@ parser.add_argument("-k", "--key", action="store_true",
 parser.add_argument("-n", "--number", type=int, default=1,
                     help="number of results to show (default: 1)")
 parser.add_argument("-l", "--language", type=str,
-                    default=utils.DEFAULT_LANG,
+                    default=io.DEFAULT_LANG,
                     help=("the language being analyzed, in ISO 639-1 "
                           "(default: en)"))
 
@@ -92,7 +91,7 @@ def stagger_join(data, parts):
     return "".join(output)
 
 
-def bruteforce(data, min_length=2, max_length=10, lang=utils.DEFAULT_LANG):
+def bruteforce(data, min_length=2, max_length=10, lang=io.DEFAULT_LANG):
     """Attempt to bruteforce the solution to a Vigenere ciphertext.
 
     Newlines are assumed to 'reset' the key.
@@ -122,7 +121,8 @@ def bruteforce(data, min_length=2, max_length=10, lang=utils.DEFAULT_LANG):
         wc = plaintext.count_words(sol, lang=lang)
         sols.append((sol, "".join(key), wc))
 
-    return [(s, k) for s, k, wc in sorted(sols, key=lambda x: x[2], reverse=True)]
+    return [(s, k) for s, k, wc
+            in sorted(sols, key=lambda x: x[2], reverse=True)]
 
 
 def vigenere(data, args):
@@ -137,7 +137,7 @@ def vigenere(data, args):
 
 
 def main():
-    args, data = utils.parse_args(parser, lines=True)
+    args, data = io.parse_args(parser, lines=True)
     vigenere(data, args)
 
 

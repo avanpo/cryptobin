@@ -6,7 +6,7 @@
 import argparse
 import string
 
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(
     description=("diff tools, on character level.")
@@ -79,7 +79,7 @@ def cdiff(data, args):
 
 
 def main():
-    args, data = utils.parse_args_multiple_files(parser)
+    args, data = io.parse_args_multiple_files(parser)
     cdiff(data, args)
 
 

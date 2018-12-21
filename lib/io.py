@@ -6,7 +6,7 @@ DEFAULT_LANG = "en"
 
 def get_lang_filepath(prefix, lang):
     lib_dir = os.path.dirname(__file__)
-    return os.path.join(lib_dir, "lang/%s_%s.txt" % (prefix, lang))
+    return os.path.join(lib_dir, "../lang/%s_%s.txt" % (prefix, lang))
 
 
 def read_file(filepath, lines=False, encoding="UTF-8"):

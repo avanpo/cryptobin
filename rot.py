@@ -7,7 +7,7 @@ import argparse
 import sys
 
 import plaintext
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(description=(
     "text rotation util. without the --key argument, this tool uses frequency"
@@ -18,7 +18,7 @@ parser.add_argument("-k", "--key", type=int,
                     help="the rotation key (example: 13)")
 parser.add_argument("-n", "--number", type=int, default=3,
                     help="number of results to show (default: 3)")
-parser.add_argument("-l", "--language", type=str, default=utils.DEFAULT_LANG,
+parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
                     help="the language being analyzed, in ISO 639-1 (default: en)")
 
 
@@ -47,7 +47,7 @@ def rotate(data, key):
     return "".join(text)
 
 
-def bruteforce(data, lang=utils.DEFAULT_LANG):
+def bruteforce(data, lang=io.DEFAULT_LANG):
     """Attempt to recover the plaintext using frequency analysis.
 
     Args:
@@ -79,7 +79,7 @@ def rot(data, args):
 
 
 def main():
-    args, data = utils.parse_args(parser)
+    args, data = io.parse_args(parser)
     rot(data, args)
 
 

@@ -8,18 +8,18 @@ See the --help option for usage information.
 
 import argparse
 
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(description="dictionary tools")
 parser.add_argument("command", metavar="COMMAND",
                     help="the command to run. currently supported commands include: test, search")
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the file (string) to test")
-parser.add_argument("-l", "--language", type=str, default=utils.DEFAULT_LANG,
+parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
                     help="the language being analyzed, in ISO 639-1 (default: en)")
 
 
-def load(lang=utils.DEFAULT_LANG, filepath=None):
+def load(lang=io.DEFAULT_LANG, filepath=None):
     """Load the specified language's dictionary.
 
     Args:
@@ -30,9 +30,9 @@ def load(lang=utils.DEFAULT_LANG, filepath=None):
         A set containing each of the words in the file.
     """
     if not filepath:
-        filepath = utils.get_lang_filepath("all_words", lang)
+        filepath = io.get_lang_filepath("all_words", lang)
 
-    data = utils.read_file(filepath, lines=True)
+    data = io.read_file(filepath, lines=True)
     dictionary = set()
     for line in data:
         dictionary.add(line.strip())
@@ -64,7 +64,7 @@ def dictionary(data, args):
 
 
 def main():
-    args, data = utils.parse_args(parser)
+    args, data = io.parse_args(parser)
     dictionary(data, args)
 
 

@@ -6,7 +6,7 @@ import string
 import sys
 
 import dictionary
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(description="anagram search util")
 parser.add_argument("file", metavar="FILE", nargs="?",
@@ -15,12 +15,12 @@ parser.add_argument("-w", "--words", type=int, default=1,
                     help="the max number of words in the anagram")
 parser.add_argument("-u", "--unknown", type=int, default=0,
                     help="the number of unknown letters")
-parser.add_argument("-l", "--language", type=str, default=utils.DEFAULT_LANG,
+parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
                     help="the language being analyzed, in ISO 639-1 (default: "
                     "en)")
 
 
-def load_anagrams(lang=utils.DEFAULT_LANG):
+def load_anagrams(lang=io.DEFAULT_LANG):
     words = dictionary.load(lang=lang)
     anagrams = {}
     for w in words:
@@ -53,7 +53,7 @@ def anagram(data, args):
 
 
 def main():
-    args, data = utils.parse_args(parser)
+    args, data = io.parse_args(parser)
     anagram(data, args)
 
 

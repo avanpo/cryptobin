@@ -13,23 +13,23 @@ import os
 import string
 import sys
 
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(description="plaintext tools")
 parser.add_argument("command", metavar="COMMAND",
                     help="the command to run. currently supported commands include: fa, wc")
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the plaintext file to be analyzed")
-parser.add_argument("-l", "--language", type=str, default=utils.DEFAULT_LANG,
+parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
                     help="the language being analyzed, in ISO 639-1 (default: en)")
 parser.add_argument("-d", "--dictionary",
                     help="the path of the dictionary to use (example: /usr/share/dict/words)")
 
 
-def load_freqs(lang=utils.DEFAULT_LANG):
-    filepath = utils.get_lang_filepath("freq", lang)
+def load_freqs(lang=io.DEFAULT_LANG):
+    filepath = io.get_lang_filepath("freq", lang)
 
-    data = utils.read_file(filepath, lines=True)
+    data = io.read_file(filepath, lines=True)
     freqs = {}
     for line in data:
         c, val = line.strip().split()
@@ -38,11 +38,11 @@ def load_freqs(lang=utils.DEFAULT_LANG):
     return freqs
 
 
-def load_words(lang=utils.DEFAULT_LANG, filepath=None):
+def load_words(lang=io.DEFAULT_LANG, filepath=None):
     if not filepath:
-        filepath = utils.get_lang_filepath("words", lang)
+        filepath = io.get_lang_filepath("words", lang)
 
-    data = utils.read_file(filepath, lines=True)
+    data = io.read_file(filepath, lines=True)
     words = set()
     for line in data:
         words.add(line.strip())
@@ -75,7 +75,7 @@ def letter_frequencies(data):
     return {k: v / n for k, v in counts.items()}
 
 
-def std_dev(data, lang=utils.DEFAULT_LANG):
+def std_dev(data, lang=io.DEFAULT_LANG):
     """Calculate standard deviation from average letter frequencies.
 
     Args:
@@ -96,7 +96,7 @@ def std_dev(data, lang=utils.DEFAULT_LANG):
     return math.sqrt(variance)
 
 
-def count_words(data, n=3, lang=utils.DEFAULT_LANG, filepath=None):
+def count_words(data, n=3, lang=io.DEFAULT_LANG, filepath=None):
     """Calculate the approximate number of n+ letter words in a text.
 
     This function is not accurate, as it has been designed for texts with all
@@ -139,7 +139,7 @@ def wc(data, args):
 
 
 def main():
-    args, data = utils.parse_args(parser)
+    args, data = io.parse_args(parser)
 
     if args.command == "fa":
         fa(data, args)

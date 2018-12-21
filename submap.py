@@ -8,7 +8,7 @@ import string
 import sys
 
 import plaintext
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(description="reverse substitution map cipher")
 parser.add_argument("file", metavar="FILE", nargs="?",
@@ -19,7 +19,7 @@ parser.add_argument("-e", "--letter-depth", type=int, default=18,
                     help=("the number of letters to attempt to swap around, "
                           "ordered by observed frequency"))
 parser.add_argument("-l", "--language", type=str,
-                    default=utils.DEFAULT_LANG,
+                    default=io.DEFAULT_LANG,
                     help=("the language being analyzed, in ISO 639-1 (default: "
                           "en)"))
 parser.add_argument("-r", "--replace", type=str,
@@ -90,7 +90,7 @@ def replace(data, r1, r2):
     return "".join([swap.get(c, c) for c in data])
 
 
-def bruteforce(data, depth, letter_depth=18, lang=utils.DEFAULT_LANG):
+def bruteforce(data, depth, letter_depth=18, lang=io.DEFAULT_LANG):
     """Recover the plaintext from a ciphertext using a letter
     substitution map.
 
@@ -136,7 +136,7 @@ def submap(data, args):
 
 
 def main():
-    args, data = utils.parse_args(parser)
+    args, data = io.parse_args(parser)
     submap(data, args)
 
 

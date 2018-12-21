@@ -12,7 +12,7 @@ import string
 import sys
 
 import plaintext
-import utils
+from lib import io
 
 parser = argparse.ArgumentParser(description="ciphertext tools")
 parser.add_argument("command", metavar="COMMAND",
@@ -21,7 +21,7 @@ parser.add_argument("command", metavar="COMMAND",
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the plaintext file to be analyzed")
 parser.add_argument("-l", "--language", type=str,
-                    default=utils.DEFAULT_LANG,
+                    default=io.DEFAULT_LANG,
                     help=("the language being analyzed, in ISO 639-1"
                           "(default: en)"))
 
@@ -65,7 +65,7 @@ def counts(data, args):
 
 
 def main():
-    args, data = utils.parse_args(parser)
+    args, data = io.parse_args(parser)
 
     if args.command == "fa":
         fa(data, args)
