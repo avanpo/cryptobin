@@ -76,6 +76,7 @@ def rot(data, args):
         sols = bruteforce(data, args.language)
         for i in range(0, min(args.number, 26)):
             print(sols[i])
+            print()
 
 
 def main():
