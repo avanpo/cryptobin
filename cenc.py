@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-"""Alpha encoding utilities at char granularity.
-"""
+"""Alpha encoding utilities at char granularity."""
 
 import argparse
 import string
