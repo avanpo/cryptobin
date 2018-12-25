@@ -43,6 +43,7 @@ def tonal_word_to_int(word):
     if word == zero:
         return 0
     total_value = 0
+    prev_word = word
     while word:
         digit_value = 1
         for digit, val in digits.items():
@@ -56,6 +57,10 @@ def tonal_word_to_int(word):
                 word = word[:-len(tone)]
                 break
         total_value += digit_value
+        if word == prev_word:
+            return -1
+        else:
+            prev_word = word
     return total_value
 
 
@@ -72,8 +77,8 @@ def translate_to_int(words):
 
 
 def tonal(data, args):
-    words = map(str.strip,
-                data.strip().replace("\n", ",").replace(" ", ",").split(","))
+    words = map(str.strip, data.strip().replace("\n", " ").split(" "))
+    words = [w for w in words if w]
     ints = translate_to_int(words)
     for i in ints:
         print("%d " % i, end="")
