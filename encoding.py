@@ -14,10 +14,14 @@ parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the file to be analyzed")
 parser.add_argument("-i", "--input", type=str, default="ascii",
                     help="input type (ascii, alpha, int, hex)")
+parser.add_argument("-o", "--output", type=str, default="ascii",
+                    help="output type (ascii, alpha, int, hex)")
+parser.add_argument("-t", "--io", type=str, default="ai",
+                    help="convenience method; 'ai' is alpha in, int out")
 parser.add_argument("-0", "--zero-based", action="store_true", default=False,
                     help="encoding is zero-based (default: false)")
-parser.add_argument("-r", "--overflow", action="store_true", default=False,
-                    help="encoding overflows (default: false)")
+parser.add_argument("-f", "--overflow", action="store_true", default=False,
+                    help="allow encoding overflow (default: false)")
 parser.add_argument("-v", "--verbose", action="store_true", default=False,
                     help="print the original data over the encoding")
 
@@ -105,17 +109,25 @@ def print_verbose(data, encoding):
         print("\n")
 
 
+def get_int_list(data):
+    return list(map(lambda s: int(s.strip()),
+                    data.replace("\n", ",").replace(" ", ",").split(",")))
+
+
 def encoding(data, args):
     data = data.strip()
-    if types[args.input] == "a":
+    if len(args.io) == 2:
+        args.input = args.io[0]
+        args.output = args.io[1]
+
+    if types[args.input] == "a" and types[args.output] == "i":
         encoding = list(map(str,
                             alpha_to_int(data, args.zero_based, args.overflow)))
-        print_encoding(data, encoding, sep=", ", verbose=args.verbose)
-    elif types[args.input] == "i":
-        data = list(map(lambda s: int(s.strip()),
-                        data.replace("\n", ",").replace(" ", ",").split(",")))
+        print_encoding(data, encoding, sep=" ", verbose=args.verbose)
+    elif types[args.input] == "i" and types[args.output] == "a":
+        data = get_int_list(data)
         encoding = int_to_alpha(data, args.zero_based, args.overflow)
-        print_encoding(data, encoding, sep=", ", verbose=args.verbose)
+        print_encoding(data, encoding, verbose=args.verbose)
     else:
         print("unknown input/output combination")
 
