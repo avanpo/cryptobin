@@ -16,8 +16,7 @@ parser.add_argument("file", metavar="FILE", nargs="?",
 
 
 def integer(data, args):
-    integers = list(map(lambda s: int(s.strip()),
-                        data.strip().replace("\n", ",").split(",")))
+    integers = io.parse_int_list(data)
     product = 1
     for i in integers:
         print("%16d: " % i, end="")

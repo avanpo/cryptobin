@@ -43,3 +43,8 @@ def parse_args_multiple_files(parser):
 
     data = [read_file(filepath) for filepath in args.files]
     return args, data
+
+
+def parse_int_list(data):
+    split = data.strip().replace("\n", ",").replace(" ", ",").split(",")
+    return [int(s.strip()) for s in split if s.strip()]
