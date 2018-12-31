@@ -77,8 +77,7 @@ def translate_to_int(words):
 
 
 def tonal(data, args):
-    words = map(str.strip, data.strip().replace("\n", " ").split(" "))
-    words = [w for w in words if w]
+    words = io.parse_list(data)
     ints = translate_to_int(words)
     for i in ints:
         print("%d " % i, end="")

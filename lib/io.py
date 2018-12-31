@@ -45,6 +45,21 @@ def parse_args_multiple_files(parser):
     return args, data
 
 
-def parse_int_list(data):
+def parse_list(data, sep=None):
+    """Parse input into a list of strings.
+
+    Uses newlines, spaces and commas as separators.
+
+    Args:
+        data: Input string
+
+    Returns:
+        List of nonempty strings.
+    """
     split = data.strip().replace("\n", ",").replace(" ", ",").split(",")
-    return [int(s.strip()) for s in split if s.strip()]
+    return [s.strip() for s in split if s.strip()]
+
+
+def parse_int_list(data):
+    """Parse input into a list of ints."""
+    return [int(s) for s in parse_list(data)]
