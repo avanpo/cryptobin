@@ -109,11 +109,6 @@ def print_verbose(data, encoding):
         print("\n")
 
 
-def get_int_list(data):
-    return list(map(lambda s: int(s.strip()),
-                    data.replace("\n", ",").replace(" ", ",").split(",")))
-
-
 def encoding(data, args):
     data = data.strip()
     if len(args.io) == 2:
@@ -125,7 +120,7 @@ def encoding(data, args):
                             alpha_to_int(data, args.zero_based, args.overflow)))
         print_encoding(data, encoding, sep=" ", verbose=args.verbose)
     elif types[args.input] == "i" and types[args.output] == "a":
-        data = get_int_list(data)
+        data = io.parse_int_list(data)
         encoding = int_to_alpha(data, args.zero_based, args.overflow)
         print_encoding(data, encoding, verbose=args.verbose)
     else:

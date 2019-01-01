@@ -18,10 +18,12 @@ parser.add_argument("file", metavar="FILE", nargs="?",
 def integer(data, args):
     integers = io.parse_int_list(data)
     product = 1
+    num_factors = 0
     for i in integers:
         print("%16d: " % i, end="")
         factors = factorint(i)
         for factor, exp in factors.items():
+            num_factors += exp
             print("%d^%d " % (factor, exp), end="")
         print()
         if i != 0:
@@ -30,6 +32,7 @@ def integer(data, args):
     print("\nSequence length:  %d" % len(integers))
     print("Sequence sum:     %d" % sum(integers))
     print("Sequence product: %d" % product)
+    print("Sequence factors: %d" % num_factors)
 
 
 def main():
