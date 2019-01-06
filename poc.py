@@ -20,7 +20,7 @@ def job(data, args):
 
 
 def main():
-    args, data = io.parse_args(parser)
+    args, data = io.parse_args(parser, need_file=False)
     job(data, args)
 
 
