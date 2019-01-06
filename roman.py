@@ -28,6 +28,15 @@ ROMAN = [
     (   4, "IV"),
     (   1, "I"),
 ]
+ROMAN_DIGIT = {
+    "I": 1,
+    "V": 5,
+    "X": 10,
+    "L": 50,
+    "C": 100,
+    "D": 500,
+    "M": 1000,
+}
 
 
 def int_to_roman(integer):
@@ -41,9 +50,15 @@ def int_to_roman(integer):
     return "".join(result)
 
 
-def roman_to_int(integer):
+def roman_to_int(numeral):
     """Convert a roman numeral string to an integer."""
-    raise NotImplemented();
+    result = 0
+    for i, c in enumerate(numeral, start=1):
+        if i == len(numeral) or ROMAN_DIGIT[c] > ROMAN_DIGIT[numeral[i]]:
+            result += ROMAN_DIGIT[c]
+        else:
+            result -= ROMAN_DIGIT[c]
+    return result
 
 
 def translate_from_int(integers):

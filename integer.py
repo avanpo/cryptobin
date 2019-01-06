@@ -4,7 +4,7 @@
 
 import argparse
 import string
-from sympy.ntheory import factorint
+from sympy import ntheory
 
 from lib import io
 
@@ -21,7 +21,7 @@ def integer(data, args):
     num_factors = 0
     for i in integers:
         print("%16d: " % i, end="")
-        factors = factorint(i)
+        factors = ntheory.factorint(i)
         for factor, exp in factors.items():
             num_factors += exp
             print("%d^%d " % (factor, exp), end="")
