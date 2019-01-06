@@ -30,15 +30,20 @@ ROMAN = [
 ]
 
 
-def int_to_roman(number):
+def int_to_roman(integer):
     """Convert an integer to a roman numeral string."""
     result = []
     for (arabic, roman) in ROMAN:
-        (factor, number) = divmod(number, arabic)
+        (factor, integer) = divmod(integer, arabic)
         result.append(roman * factor)
-        if number == 0:
+        if integer == 0:
             break
     return "".join(result)
+
+
+def roman_to_int(integer):
+    """Convert a roman numeral string to an integer."""
+    raise NotImplemented();
 
 
 def translate_from_int(integers):
