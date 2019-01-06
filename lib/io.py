@@ -21,7 +21,7 @@ def read_file(filepath, lines=False, encoding="UTF-8"):
         sys.exit()
     
     
-def parse_args(parser, lines=False):
+def parse_args(parser, lines=False, need_file=True):
     args = parser.parse_args()
     if args.file:
         data = read_file(args.file, lines)
@@ -30,8 +30,10 @@ def parse_args(parser, lines=False):
             data = sys.stdin.readlines()
         else:
             data = sys.stdin.read()
-    else:
+    elif need_file:
         parser.error("no input file found")
+    else:
+        data = ""
 
     return args, data
 
