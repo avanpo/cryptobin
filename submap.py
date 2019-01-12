@@ -23,8 +23,10 @@ parser.add_argument("-l", "--language", type=str,
                     help=("the language being analyzed, in ISO 639-1 (default: "
                           "en)"))
 parser.add_argument("-r", "--replace", type=str,
-                    help=("replace two letters with each other. 'ea' will "
-                          "swap every 'e' with an 'a'"))
+                    help=("replace, in order, a comma-separated list of two "
+                          "letters with each other. 'ea,ar' will swap every "
+                          "e->a and a->e (simultaneously), and then every a->r "
+                          "and r->a."))
 
 
 def calc_observed_freq(data):
@@ -75,7 +77,7 @@ def analyze_order(s, letter_order, depth):
             analyze_order(s, new_order, depth - 1)
 
 
-def replace(data, r1, r2):
+def substitute(data, r1, r2):
     """Swap two characters in the text with each other.
 
     Args:
@@ -88,6 +90,22 @@ def replace(data, r1, r2):
     """
     swap = {r1: r2, r2: r1}
     return "".join([swap.get(c, c) for c in data])
+
+
+def replace(data, replacements):
+    """Swap a list of character pairs in the text.
+
+    Args:
+        data: The text.
+        replacements: An list of tuples containing characters.
+
+    Returns:
+        The text with the swaps done.
+    """
+    result = data
+    for r1, r2 in replacements:
+        result = substitute(result, r1, r2)
+    return result
 
 
 def bruteforce(data, depth, letter_depth=18, lang=io.DEFAULT_LANG):
@@ -125,9 +143,11 @@ def bruteforce(data, depth, letter_depth=18, lang=io.DEFAULT_LANG):
 
 def submap(data, args):
     if args.replace:
-        if len(args.replace) != 2:
+        replacements = args.replace.split(",")
+        if any(len(r) != 2 for r in replacements):
             parser.error("--replace arg must be exactly two chars")
-        pt = replace(data, args.replace[0], args.replace[1])
+        replacements = list(map(list, replacements))
+        pt = replace(data, replacements)
         print(pt, end="")
     else:
         pts = bruteforce(data, depth=args.depth,
