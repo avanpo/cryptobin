@@ -13,10 +13,21 @@ parser = argparse.ArgumentParser(
 )
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the file to be analyzed")
+parser.add_argument("-s", "--step", action="store_true", default=False,
+                    help="calculate step between sequence elements (default: false)")
 
 
-def integer(data, args):
-    integers = io.parse_int_list(data)
+def step(integers):
+    prev = None
+    for i in integers:
+        if not prev:
+            prev = i
+            continue
+        print("%s " % (i - prev), end='')
+        prev = i
+
+
+def integer(integers):
     product = 1
     num_factors = 0
     for i in integers:
@@ -37,7 +48,11 @@ def integer(data, args):
 
 def main():
     args, data = io.parse_args(parser)
-    integer(data, args)
+    integers = io.parse_int_list(data)
+    if args.step:
+        step(integers)
+    else:
+        integer(integers)
 
 
 if __name__ == "__main__":
