@@ -17,7 +17,13 @@ parser.add_argument("-s", "--step", action="store_true", default=False,
                     help="calculate step between sequence elements (default: false)")
 
 
+def digit(number, n):
+    """Return the nth digit of the number."""
+    return number // 10**n % 10
+
+
 def step(integers):
+    """Return the deltas between each consecutive pair of integers."""
     prev = None
     for i in integers:
         if not prev:
