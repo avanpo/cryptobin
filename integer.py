@@ -17,9 +17,13 @@ parser.add_argument("-s", "--step", action="store_true", default=False,
                     help="calculate step between sequence elements (default: false)")
 
 
-def digit(number, n):
-    """Return the nth digit of the number."""
-    return number // 10**n % 10
+def digit(i, n):
+    """Return the nth digit of the integer.
+
+    For example, the 1st digit of 512 is 5.
+    """
+    e = len(str(i)) - n
+    return i // 10**e % 10
 
 
 def step(integers):
