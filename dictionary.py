@@ -35,7 +35,8 @@ def load(lang=io.DEFAULT_LANG, filepath=None):
     data = io.read_file(filepath, lines=True)
     dictionary = set()
     for line in data:
-        dictionary.add(line.strip())
+        word = line.strip().lower().replace('-', '').replace(' ', '')
+        dictionary.add(word)
 
     return dictionary
 
