@@ -22,6 +22,8 @@ parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the plaintext file to be analyzed")
 parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
                     help="the language being analyzed, in ISO 639-1 (default: en)")
+parser.add_argument("-v", "--verbose", action="store_true", default=False,
+                    help="print out words that are counted")
 parser.add_argument("-d", "--dictionary",
                     help="the path of the dictionary to use (example: /usr/share/dict/words)")
 
@@ -96,7 +98,7 @@ def std_dev(data, lang=io.DEFAULT_LANG):
     return math.sqrt(variance)
 
 
-def count_words(data, n=3, lang=io.DEFAULT_LANG, filepath=None):
+def count_words(data, n=3, lang=io.DEFAULT_LANG, verbose=False, filepath=None):
     """Calculate the approximate number of n+ letter words in a text.
 
     This function is not accurate, as it has been designed for texts with all
@@ -108,6 +110,7 @@ def count_words(data, n=3, lang=io.DEFAULT_LANG, filepath=None):
         n: The minimum number of letters in a word. If this is 1, "iiiii" will
         be 5 words (default: 3).
         lang: The language to compare to (default: en).
+        verbose: Whether to print words.
         filepath: Use a different dictionary (default: None).
 
     Returns:
@@ -122,6 +125,8 @@ def count_words(data, n=3, lang=io.DEFAULT_LANG, filepath=None):
         for l in range(12, n - 1, -1):
             if i + l < len(data) and data[i:i + l].lower() in words:
                 count += 1
+                if verbose:
+                    print(">", data[i:i + l].lower())
                 i += l - 1
                 break
         i += 1
@@ -134,7 +139,7 @@ def fa(data, args):
 
 
 def wc(data, args):
-    count = count_words(data, lang=args.language, filepath=args.dictionary)
+    count = count_words(data, lang=args.language, verbose=args.verbose, filepath=args.dictionary)
     print(count)
 
 
