@@ -10,7 +10,7 @@ import plaintext
 from lib import io
 
 parser = argparse.ArgumentParser(description=(
-    "text rotation util. without the --key argument, this tool uses frequency"
+    "text rotation util. without the --key argument, this tool uses frequency "
     "analysis to find the plaintext."))
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the file to be analyzed")

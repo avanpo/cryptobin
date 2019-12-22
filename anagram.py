@@ -21,6 +21,7 @@ parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
 
 
 def load_anagrams(lang=io.DEFAULT_LANG):
+    """Get a dictionary of sorted strings to list of anagrams."""
     words = dictionary.load(lang=lang)
     anagrams = {}
     for w in words:
@@ -33,6 +34,7 @@ def load_anagrams(lang=io.DEFAULT_LANG):
 
 
 def search_anagrams(anagrams, partial, unknown):
+    """Search anagrams for possible matches."""
     sols = []
     for letters in map("".join, itertools.product(string.ascii_lowercase,
                                                   repeat=unknown)):

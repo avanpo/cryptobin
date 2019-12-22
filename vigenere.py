@@ -43,9 +43,9 @@ import rot
 from lib import io
 
 parser = argparse.ArgumentParser(description=(
-    "vigenere cipher tools. with no arguments this tool attempts to break"
-    "ciphertext by trying every key length. this tool ignores whitespace"
-    "and all punctuation, only letter positiions relative to each other"
+    "vigenere cipher tools. with no arguments this tool attempts to break "
+    "ciphertext by trying every key length. this tool ignores whitespace "
+    "and all punctuation, only letter positiions relative to each other "
     "are used. any newlines in the file are assumed to reset the key."))
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the ciphertext file to be analyzed")

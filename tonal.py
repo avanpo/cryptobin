@@ -8,7 +8,7 @@ import string
 from lib import io
 
 parser = argparse.ArgumentParser(
-    description=("diff tools, on character level.")
+    description=("tonal system utilities")
 )
 parser.add_argument("file", metavar="FILE", nargs="?",
                     help="the file to be analyzed")
