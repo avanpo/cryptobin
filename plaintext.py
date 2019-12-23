@@ -56,7 +56,7 @@ parser.add_argument(
 def load_freqs(lang=io.DEFAULT_LANG, n=1):
     filepath = io.get_lang_filepath("freq", lang)
     if n == 2:
-        filepath = io.get_lang_filepath("digram_freq" % n, lang)
+        filepath = io.get_lang_filepath("digram_freq", lang)
 
     data = io.read_file(filepath, lines=True)
     freqs = {}
@@ -114,7 +114,7 @@ def ngram_frequencies(data, n=1):
         A dictionary of n-grams with frequencies.
     """
     letters = set(string.ascii_lowercase)
-    result = collections.defaultdict(0)
+    result = collections.defaultdict(lambda: 0)
     for i in range(0, len(data) - n):
         if data[i] not in letters:
             continue
@@ -124,7 +124,7 @@ def ngram_frequencies(data, n=1):
                 break
             if data[j] in letters:
                 ngram.append(data[j])
-        result[ngram] += 1
+        result["".join(ngram)] += 1
     return result
 
 
