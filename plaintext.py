@@ -109,10 +109,12 @@ def ngram_frequencies(data, n=1):
 
     Args:
         data: The text to be analyzed.
+        n: Degree of the ngram.
 
     Returns:
         A dictionary of n-grams with frequencies.
     """
+    total_ngrams = sum(count_letters(data).values()) - n + 1
     letters = set(string.ascii_lowercase)
     result = collections.defaultdict(lambda: 0)
     for i in range(0, len(data) - n):
@@ -125,7 +127,7 @@ def ngram_frequencies(data, n=1):
             if data[j] in letters:
                 ngram.append(data[j])
         result["".join(ngram)] += 1
-    return result
+    return {k: v / total_ngrams for k, v in result.items()}
 
 
 def std_dev(data, lang=io.DEFAULT_LANG):
