@@ -4,21 +4,19 @@
 
 import argparse
 import string
-import sys
 
-import plaintext
 from lib import io
 
-parser = argparse.ArgumentParser(description=(
-    "playfair cipher utilities."))
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the file to be analyzed")
-parser.add_argument("-k", "--key", type=str,
-                    help="the cipher key")
-parser.add_argument("-d", "--decrypt", action="store_true", default=False,
-                    help="decrypt instead of encrypt")
-parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
-                    help="the language being analyzed, in ISO 639-1 (default: en)")
+parser = argparse.ArgumentParser(description=("playfair cipher utilities."))
+parser.add_argument("file", metavar="FILE", nargs="?", help="the file to be analyzed")
+parser.add_argument("-k", "--key", type=str, help="the cipher key")
+parser.add_argument(
+    "-d",
+    "--decrypt",
+    action="store_true",
+    default=False,
+    help="decrypt instead of encrypt",
+)
 
 
 def build_maps(key):
