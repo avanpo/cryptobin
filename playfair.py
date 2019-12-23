@@ -81,12 +81,15 @@ def encrypt_digram(coords, letters, digram, decrypt=False):
     return c1 + c2
 
 
-def encrypt(key, text, decrypt=False, uncommon="x"):
+def encrypt(key, text, decrypt=False, uncommon="x", remove=False):
     """Encrypt text using the Playfair cipher.
 
     Args:
         key: The key in human readable form.
         text: The plaintext or ciphertext.
+        decrypt: Decrypt instead of encrypt.
+        uncommon: The uncommon letter to use in enryption.
+        remove: Remove uncommon letters when decrypting.
 
     Returns:
         The encrypted form of the input.
@@ -110,6 +113,12 @@ def encrypt(key, text, decrypt=False, uncommon="x"):
         else:
             pair += c
             new_pair = ""
+
+        new_digram = encrypt_digram(coords, letters, pair, decrypt)
+        # Remove uncommon letter when decrypting (this can remove legitimate
+        # letters).
+        if decrypt and remove and new_digram[1] == uncommon.lower():
+            new_digram = new_digram[0]
 
         output.append(encrypt_digram(coords, letters, pair, decrypt))
         pair = new_pair
