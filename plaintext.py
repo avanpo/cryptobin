@@ -69,7 +69,7 @@ def load_freqs(lang=io.DEFAULT_LANG, n=1):
 
 def load_words(lang=io.DEFAULT_LANG, filepath=None):
     if not filepath:
-        filepath = io.get_lang_filepath("words", lang)
+        filepath = io.get_lang_filepath("all_words", lang)
 
     data = io.read_file(filepath, lines=True)
     words = set()
@@ -175,8 +175,8 @@ def count_words(data, n=3, lang=io.DEFAULT_LANG, verbose=False, filepath=None):
     count = 0
     i = 0
     while i < len(data):
-        for l in range(12, n - 1, -1):
-            if i + l < len(data) and data[i : i + l].lower() in words:
+        for l in range(min(11, len(data) - i), n - 1, -1):
+            if data[i : i + l].lower() in words:
                 count += 1
                 if verbose:
                     print(">", data[i : i + l].lower())
