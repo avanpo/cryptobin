@@ -8,6 +8,7 @@ See the --help option for usage information.
 """
 
 import argparse
+import collections
 import math
 import os
 import string
@@ -32,6 +33,13 @@ parser.add_argument(
     help="the language being analyzed, in ISO 639-1 (default: en)",
 )
 parser.add_argument(
+    "-n",
+    "--ngram",
+    type=int,
+    default=1,
+    help="size of letter groups to analyze (default: 1)",
+)
+parser.add_argument(
     "-v",
     "--verbose",
     action="store_true",
@@ -45,8 +53,10 @@ parser.add_argument(
 )
 
 
-def load_freqs(lang=io.DEFAULT_LANG):
+def load_freqs(lang=io.DEFAULT_LANG, n=1):
     filepath = io.get_lang_filepath("freq", lang)
+    if n == 2:
+        filepath = io.get_lang_filepath("digram_freq" % n, lang)
 
     data = io.read_file(filepath, lines=True)
     freqs = {}
@@ -92,6 +102,30 @@ def letter_frequencies(data):
         print("=> ERROR: No alpha characters in input.")
         sys.exit()
     return {k: v / n for k, v in counts.items()}
+
+
+def ngram_frequencies(data, n=1):
+    """Calculate the n-gram frequencies in a text.
+
+    Args:
+        data: The text to be analyzed.
+
+    Returns:
+        A dictionary of n-grams with frequencies.
+    """
+    letters = set(string.ascii_lowercase)
+    result = collections.defaultdict(0)
+    for i in range(0, len(data) - n):
+        if data[i] not in letters:
+            continue
+        ngram = [data[i]]
+        for j in range(i + 1, len(data)):
+            if len(ngram) == n:
+                break
+            if data[j] in letters:
+                ngram.append(data[j])
+        result[ngram] += 1
+    return result
 
 
 def std_dev(data, lang=io.DEFAULT_LANG):
