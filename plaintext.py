@@ -14,6 +14,7 @@ import os
 import string
 import sys
 
+import dictionary
 from lib import io
 
 parser = argparse.ArgumentParser(description="plaintext tools")
@@ -151,7 +152,7 @@ def std_dev(data, lang=io.DEFAULT_LANG):
     return math.sqrt(variance)
 
 
-def count_words(data, n=3, lang=io.DEFAULT_LANG, verbose=False, filepath=None):
+def count_words(words, data, n=3, verbose=False):
     """Calculate the approximate number of n+ letter words in a text.
 
     This function is not accurate, as it has been designed for texts with all
@@ -159,19 +160,16 @@ def count_words(data, n=3, lang=io.DEFAULT_LANG, verbose=False, filepath=None):
     or spacing. It should, however, be good enough for basic cryptanalysis.
 
     Args:
+        words: The dictionary to use.
         data: The text to be analyzed.
         n: The minimum number of letters in a word. If this is 1, "iiiii" will
         be 5 words (default: 3).
-        lang: The language to compare to (default: en).
         verbose: Whether to print words.
-        filepath: Use a different dictionary (default: None).
 
     Returns:
         The approximate number of n+ letter words.
     """
-    words = load_words(lang=lang, filepath=filepath)
     data = "".join(data.split())
-
     count = 0
     i = 0
     while i < len(data):
@@ -192,9 +190,8 @@ def fa(data, args):
 
 
 def wc(data, args):
-    count = count_words(
-        data, lang=args.language, verbose=args.verbose, filepath=args.dictionary
-    )
+    words = dictionary.load(lang=args.language, filepath=args.dictionary)
+    count = count_words(words, data, verbose=args.verbose)
     print(count)
 
 
