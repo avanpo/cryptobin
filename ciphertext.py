@@ -37,14 +37,24 @@ parser.add_argument(
     default=1,
     help="size of letter groups to analyze (default: 1)",
 )
+parser.add_argument(
+    "-d",
+    "--doubles",
+    action="store_true",
+    default=False,
+    help="only print double digrams (e.g. 'ee')",
+)
 
 
-def print_fa(observed_freq, lang_freq):
+def print_fa(observed_freq, lang_freq, doubles=False):
     print("=> Calculated letter frequencies")
     print("   Observed      | Language")
     print("   --------------+-------------")
     observed = sorted(observed_freq, key=observed_freq.get, reverse=True)
     lang = sorted(lang_freq, key=lang_freq.get, reverse=True)
+    if doubles:
+        observed = filter(lambda s: len(s) == 2 and s[0] == s[1], observed)
+        lang = filter(lambda s: len(s) == 2 and s[0] == s[1], lang)
     rows = 0
     for o, l in zip(observed, lang):
         print("   %3s (%.4f)  | %3s (%.4f)" % (o, observed_freq[o], l, lang_freq[l]))
@@ -56,7 +66,7 @@ def print_fa(observed_freq, lang_freq):
 def fa(data, args):
     observed_freq = plaintext.ngram_frequencies(data, n=args.ngram)
     lang_freq = plaintext.load_freqs(args.language, n=args.ngram)
-    print_fa(observed_freq, lang_freq)
+    print_fa(observed_freq, lang_freq, doubles=args.doubles)
 
 
 def counts(data, args):
