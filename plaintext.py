@@ -16,16 +16,33 @@ import sys
 from lib import io
 
 parser = argparse.ArgumentParser(description="plaintext tools")
-parser.add_argument("command", metavar="COMMAND",
-                    help="the command to run. currently supported commands include: fa, wc")
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the plaintext file to be analyzed")
-parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
-                    help="the language being analyzed, in ISO 639-1 (default: en)")
-parser.add_argument("-v", "--verbose", action="store_true", default=False,
-                    help="print out words that are counted")
-parser.add_argument("-d", "--dictionary",
-                    help="the path of the dictionary to use (example: /usr/share/dict/words)")
+parser.add_argument(
+    "command",
+    metavar="COMMAND",
+    help="the command to run. currently supported commands include: fa, wc",
+)
+parser.add_argument(
+    "file", metavar="FILE", nargs="?", help="the plaintext file to be analyzed"
+)
+parser.add_argument(
+    "-l",
+    "--language",
+    type=str,
+    default=io.DEFAULT_LANG,
+    help="the language being analyzed, in ISO 639-1 (default: en)",
+)
+parser.add_argument(
+    "-v",
+    "--verbose",
+    action="store_true",
+    default=False,
+    help="print out words that are counted",
+)
+parser.add_argument(
+    "-d",
+    "--dictionary",
+    help="the path of the dictionary to use (example: /usr/share/dict/words)",
+)
 
 
 def load_freqs(lang=io.DEFAULT_LANG):
@@ -94,7 +111,7 @@ def std_dev(data, lang=io.DEFAULT_LANG):
     variance = 0.0
     for c in string.ascii_lowercase:
         variance += (lang_freq[c] - observed_freq[c]) ** 2
-    
+
     return math.sqrt(variance)
 
 
@@ -123,10 +140,10 @@ def count_words(data, n=3, lang=io.DEFAULT_LANG, verbose=False, filepath=None):
     i = 0
     while i < len(data):
         for l in range(12, n - 1, -1):
-            if i + l < len(data) and data[i:i + l].lower() in words:
+            if i + l < len(data) and data[i : i + l].lower() in words:
                 count += 1
                 if verbose:
-                    print(">", data[i:i + l].lower())
+                    print(">", data[i : i + l].lower())
                 i += l - 1
                 break
         i += 1
@@ -139,7 +156,9 @@ def fa(data, args):
 
 
 def wc(data, args):
-    count = count_words(data, lang=args.language, verbose=args.verbose, filepath=args.dictionary)
+    count = count_words(
+        data, lang=args.language, verbose=args.verbose, filepath=args.dictionary
+    )
     print(count)
 
 
