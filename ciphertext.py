@@ -53,14 +53,16 @@ def print_fa(observed_freq, lang_freq, doubles=False):
     observed = sorted(observed_freq, key=observed_freq.get, reverse=True)
     lang = sorted(lang_freq, key=lang_freq.get, reverse=True)
     if doubles:
-        observed = filter(lambda s: len(s) == 2 and s[0] == s[1], observed)
-        lang = filter(lambda s: len(s) == 2 and s[0] == s[1], lang)
+        observed = list(filter(lambda s: len(s) == 2 and s[0] == s[1], observed))
+        lang = list(filter(lambda s: len(s) == 2 and s[0] == s[1], lang))
     rows = 0
     for o, l in zip(observed, lang):
         print("   %3s (%.4f)  | %3s (%.4f)" % (o, observed_freq[o], l, lang_freq[l]))
         rows += 1
         if rows > 30:
             break
+    for l in lang[rows:30]:
+        print("                 | %3s (%.4f)" % (l, lang_freq[l]))
 
 
 def fa(data, args):
