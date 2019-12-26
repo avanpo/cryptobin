@@ -7,26 +7,43 @@ import argparse
 import string
 import sys
 
+import dictionary
 import plaintext
 from lib import io
 
 parser = argparse.ArgumentParser(description="reverse substitution map cipher")
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the input file")
-parser.add_argument("-d", "--depth", type=int, default=5,
-                    help="the depth of the breadth first search")
-parser.add_argument("-e", "--letter-depth", type=int, default=18,
-                    help=("the number of letters to attempt to swap around, "
-                          "ordered by observed frequency"))
-parser.add_argument("-l", "--language", type=str,
-                    default=io.DEFAULT_LANG,
-                    help=("the language being analyzed, in ISO 639-1 (default: "
-                          "en)"))
-parser.add_argument("-r", "--replace", type=str,
-                    help=("replace, in order, a comma-separated list of two "
-                          "letters with each other. 'ea,ar' will swap every "
-                          "e->a and a->e (simultaneously), and then every a->r "
-                          "and r->a."))
+parser.add_argument("file", metavar="FILE", nargs="?", help="the input file")
+parser.add_argument(
+    "-d", "--depth", type=int, default=5, help="the depth of the breadth first search"
+)
+parser.add_argument(
+    "-e",
+    "--letter-depth",
+    type=int,
+    default=18,
+    help=(
+        "the number of letters to attempt to swap around, "
+        "ordered by observed frequency"
+    ),
+)
+parser.add_argument(
+    "-l",
+    "--language",
+    type=str,
+    default=io.DEFAULT_LANG,
+    help=("the language being analyzed, in ISO 639-1 (default: " "en)"),
+)
+parser.add_argument(
+    "-r",
+    "--replace",
+    type=str,
+    help=(
+        "replace, in order, a comma-separated list of two "
+        "letters with each other. 'ea,ar' will swap every "
+        "e->a and a->e (simultaneously), and then every a->r "
+        "and r->a."
+    ),
+)
 
 
 def calc_observed_freq(data):
@@ -56,14 +73,15 @@ class SubMapSearch:
         self.seen = set()
 
 
-def analyze_order(s, letter_order, depth):
+def analyze_order(words, s, letter_order, depth):
     letter_map = {k: v for k, v in zip(letter_order, s.lang_order)}
-    pt = "".join([letter_map[c.lower()] if c in string.ascii_letters
-                         else c for c in s.data])
+    pt = "".join(
+        [letter_map[c.lower()] if c in string.ascii_letters else c for c in s.data]
+    )
 
-    words = plaintext.count_words(pt)
-    if words > s.best:
-        s.best = words
+    num_words = plaintext.count_words(words, pt)
+    if num_words > s.best:
+        s.best = num_words
         s.plaintexts.append(pt)
 
     if depth == 0:
@@ -136,7 +154,8 @@ def bruteforce(data, depth, letter_depth=18, lang=io.DEFAULT_LANG):
     observed_order = generate_observed_order(observed_freq)
     search.seen.add("".join(observed_order))
 
-    analyze_order(search, observed_order, depth)
+    words = dictionary.load(lang=lang)
+    analyze_order(words, search, observed_order, depth)
 
     return list(reversed(search.plaintexts))
 
@@ -150,8 +169,9 @@ def submap(data, args):
         pt = replace(data, replacements)
         print(pt, end="")
     else:
-        pts = bruteforce(data, depth=args.depth,
-                         letter_depth=args.letter_depth, lang=args.language)
+        pts = bruteforce(
+            data, depth=args.depth, letter_depth=args.letter_depth, lang=args.language
+        )
         print(pts[0], end="")
 
 
