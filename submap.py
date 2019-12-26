@@ -92,7 +92,7 @@ def analyze_order(words, s, letter_order, depth):
         new_order[i], new_order[i + 1] = new_order[i + 1], new_order[i]
         if "".join(new_order) not in s.seen:
             s.seen.add("".join(new_order))
-            analyze_order(s, new_order, depth - 1)
+            analyze_order(words, s, new_order, depth - 1)
 
 
 def substitute(data, r1, r2):
