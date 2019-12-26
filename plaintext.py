@@ -115,6 +115,7 @@ def ngram_frequencies(data, n=1):
     Returns:
         A dictionary of n-grams with frequencies.
     """
+    data = data.lower()
     total_ngrams = sum(count_letters(data).values()) - n + 1
     letters = set(string.ascii_lowercase)
     result = collections.defaultdict(lambda: 0)
