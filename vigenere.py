@@ -38,6 +38,7 @@ import math
 import string
 import sys
 
+import dictionary
 import plaintext
 import rot
 from lib import io
@@ -106,6 +107,7 @@ def bruteforce(data, min_length=2, max_length=10, lang=io.DEFAULT_LANG):
         A list of the most likely plaintexts for each key length.
     """
     data = [strstrip(line) for line in data]
+    words = dictionary.load(lang=lang)
 
     sols = []
     for i in range(min_length, max_length + 1):
@@ -118,7 +120,7 @@ def bruteforce(data, min_length=2, max_length=10, lang=io.DEFAULT_LANG):
             key_char = chr((26 + ord(s[0]) - ord(part_sols[0][0])) % 26 + 65)
             key.append(key_char)
         sol = stagger_join(data, parts)
-        wc = plaintext.count_words(sol, lang=lang)
+        wc = plaintext.count_words(words, sol)
         sols.append((sol, "".join(key), wc))
 
     return [(s, k) for s, k, wc
