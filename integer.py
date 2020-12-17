@@ -1,20 +1,29 @@
 #!/usr/bin/env python
-
 """Integer and integer sequence utilities."""
 
 import argparse
+import statistics
 import string
 from sympy import ntheory
 
 from lib import io
 
-parser = argparse.ArgumentParser(
-    description=("integer tools.")
-)
-parser.add_argument("file", metavar="FILE", nargs="?",
+parser = argparse.ArgumentParser(description=("integer tools."))
+parser.add_argument("file",
+                    metavar="FILE",
+                    nargs="?",
                     help="the file to be analyzed")
-parser.add_argument("-s", "--step", action="store_true", default=False,
-                    help="calculate step between sequence elements (default: false)")
+parser.add_argument(
+    "-s",
+    "--step",
+    action="store_true",
+    default=False,
+    help="calculate step between sequence elements (default: false)")
+parser.add_argument("-x",
+                    "--sort",
+                    action="store_true",
+                    default=False,
+                    help="sort the output of the sequence (default: false)")
 
 
 def digit(i, n):
@@ -37,7 +46,9 @@ def step(integers):
         prev = i
 
 
-def integer(integers):
+def integer(integers, sort=False):
+    if sort:
+        integers = sorted(integers)
     product = 1
     num_factors = 0
     for i in integers:
@@ -50,19 +61,25 @@ def integer(integers):
         if i != 0:
             product *= i
 
-    print("\nSequence length:  %d" % len(integers))
-    print("Sequence sum:     %d" % sum(integers))
-    print("Sequence product: %d" % product)
-    print("Sequence factors: %d" % num_factors)
+    print(f"\nSequence length:  {len(integers)}")
+    print(f"Sequence sum:     {sum(integers)}")
+    print(f"Sequence product: {product}")
+    print(f"Sequence factors: {num_factors}")
+
+    si = sorted(integers)
+    median = statistics.median(si)
+    print(f"Min/median/max:   {si[0]}/{median}/{si[-1]}")
 
 
 def main():
     args, data = io.parse_args(parser)
     integers = io.parse_int_list(data)
     if args.step:
+        if args.sort:
+            raise NotImplementedError
         step(integers)
     else:
-        integer(integers)
+        integer(integers, args.sort)
 
 
 if __name__ == "__main__":
