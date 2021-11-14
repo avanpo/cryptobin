@@ -1,34 +1,32 @@
 #!/usr/bin/env python
-
 """Tonal system utilities."""
-
-import argparse
-import string
 
 from lib import io
 
-parser = argparse.ArgumentParser(
-    description=("convert roman numerals to and from ints")
-)
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the file to be analyzed")
-parser.add_argument("-n", "--numerals", action="store_true", default=False,
-                    help="translate numerals to integers")
+
+def define_arguments(parser):
+    parser.set_defaults(func=roman)
+    parser.add_argument("-n",
+                        "--numerals",
+                        action="store_true",
+                        default=False,
+                        help="translate numerals to integers")
+
 
 ROMAN = [
     (1000, "M", 0),
-    ( 900, "CM", 3),
-    ( 500, "D", 1),
-    ( 400, "CD", 1),
-    ( 100, "C", 0),
-    (  90, "XC", 3),
-    (  50, "L", 1),
-    (  40, "XL", 1),
-    (  10, "X", 0),
-    (   9, "IX", 3),
-    (   5, "V", 1),
-    (   4, "IV", 1),
-    (   1, "I", 0),
+    (900, "CM", 3),
+    (500, "D", 1),
+    (400, "CD", 1),
+    (100, "C", 0),
+    (90, "XC", 3),
+    (50, "L", 1),
+    (40, "XL", 1),
+    (10, "X", 0),
+    (9, "IX", 3),
+    (5, "V", 1),
+    (4, "IV", 1),
+    (1, "I", 0),
 ]
 
 
@@ -101,12 +99,3 @@ def roman(data, args):
     else:
         numerals = translate_from_int(io.parse_int_list(data))
         print(",".join(numerals))
-
-
-def main():
-    args, data = io.parse_args(parser)
-    roman(data, args)
-
-
-if __name__ == "__main__":
-    main()

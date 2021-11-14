@@ -1,42 +1,39 @@
 #!/usr/bin/env python
-
 """Tonal system utilities."""
 
-import argparse
 import string
 
 from lib import io
 
-parser = argparse.ArgumentParser(
-    description=("tonal system utilities")
-)
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the file to be analyzed")
+
+def define_arguments(parser):
+    parser.set_defaults(func=tonal)
+
 
 zero = "noll"
 tones = {
-        "an": 1,
-        "de": 2,
-        "ti": 3,
-        "go": 4,
-        "su": 5,
-        "by": 6,
-        "ra": 7,
-        "me": 8,
-        "ni": 9,
-        "ko": 10,
-        "hu": 11,
-        "vy": 12,
-        "la": 13,
-        "po": 14,
-        "fy": 15,
-        }
+    "an": 1,
+    "de": 2,
+    "ti": 3,
+    "go": 4,
+    "su": 5,
+    "by": 6,
+    "ra": 7,
+    "me": 8,
+    "ni": 9,
+    "ko": 10,
+    "hu": 11,
+    "vy": 12,
+    "la": 13,
+    "po": 14,
+    "fy": 15,
+}
 digits = {
-        "ton": 16,
-        "san": 256,
-        "mill": 4096,
-        "bong": 65536,
-        }
+    "ton": 16,
+    "san": 256,
+    "mill": 4096,
+    "bong": 65536,
+}
 
 
 def tonal_word_to_int(word):
@@ -82,12 +79,3 @@ def tonal(data, args):
     for i in ints:
         print("%d " % i, end="")
     print()
-
-
-def main():
-    args, data = io.parse_args(parser)
-    tonal(data, args)
-
-
-if __name__ == "__main__":
-    main()

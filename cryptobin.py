@@ -7,6 +7,9 @@ import string
 
 import bifid
 import frequency_analysis
+import morse
+import roman
+import tonal
 from lib import io
 
 parser = argparse.ArgumentParser(description="cryptobin cli tool.")
@@ -26,9 +29,15 @@ parser.add_argument("-l",
 
 # Subcommands.
 bifid.define_arguments(
-    subparsers.add_parser('bifid', help="bifid cipher utilities"))
+    subparsers.add_parser("bifid", help="bifid cipher utilities"))
 frequency_analysis.define_arguments(
-    subparsers.add_parser('fa', help="frequency analysis"))
+    subparsers.add_parser("fa", help="frequency analysis"))
+morse.define_arguments(
+    subparsers.add_parser("morse", help="morse encoding utilities"))
+tonal.define_arguments(
+    subparsers.add_parser("tonal", help="tonal encoding utilities"))
+roman.define_arguments(
+    subparsers.add_parser("roman", help="roman numeral encoding utilities"))
 
 
 def dispatch(data, args):
