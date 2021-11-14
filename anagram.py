@@ -1,39 +1,29 @@
 #!/usr/bin/env python
 
-import argparse
 import itertools
 import string
-import sys
 
 import dictionary
 from lib import io
 
-parser = argparse.ArgumentParser(description="anagram search util")
-parser.add_argument("file",
-                    metavar="FILE",
-                    nargs="?",
-                    help="the file (anagram) to test")
-parser.add_argument("-w",
-                    "--words",
-                    type=int,
-                    default=1,
-                    help="the max number of words in the anagram")
-parser.add_argument("-u",
-                    "--unknown",
-                    type=int,
-                    default=0,
-                    help="the number of unknown letters")
-parser.add_argument("-s",
-                    "--subsets",
-                    action="store_true",
-                    default=False,
-                    help="also search subsets")
-parser.add_argument("-l",
-                    "--language",
-                    type=str,
-                    default=io.DEFAULT_LANG,
-                    help="the language being analyzed, in ISO 639-1 (default: "
-                    "en)")
+
+def define_arguments(parser):
+    parser.set_defaults(func=anagram)
+    parser.add_argument("-w",
+                        "--words",
+                        type=int,
+                        default=1,
+                        help="the max number of words in the anagram")
+    parser.add_argument("-u",
+                        "--unknown",
+                        type=int,
+                        default=0,
+                        help="the number of unknown letters")
+    parser.add_argument("-s",
+                        "--subsets",
+                        action="store_true",
+                        default=False,
+                        help="also search subsets")
 
 
 def load_anagrams(lang=io.DEFAULT_LANG):
@@ -54,13 +44,14 @@ def load_anagrams(lang=io.DEFAULT_LANG):
 
 def search(anagrams, partial, unknown):
     """Search anagrams for possible matches with a number of unknown."""
-    sols = []
+    sols = set()
     for letters in map(
-            "".join, itertools.product(string.ascii_lowercase,
-                                       repeat=unknown)):
+            "".join,
+            itertools.combinations_with_replacement(string.ascii_lowercase,
+                                                    unknown)):
         sorted_str = "".join(sorted(partial + letters))
         if sorted_str in anagrams:
-            sols.append(sorted_str)
+            sols.add(sorted_str)
     return sols
 
 
@@ -68,9 +59,11 @@ def search_subsets(anagrams, data):
     """Search anagrams for possible subset matches."""
     sols = set()
     for s in itertools.chain.from_iterable(
-            itertools.combinations(data, r) for r in range(1,
-                                                           len(data) + 1)):
-        sorted_str = "".join(sorted(s))
+            itertools.combinations(sorted(data), r)
+            for r in range(len(data) + 1, 1, -1)):
+        # itertools.combinations keeps the order of the input, so this output
+        # is sorted.
+        sorted_str = "".join(s)
         if sorted_str in anagrams:
             sols.add(sorted_str)
     return sorted(sols, key=lambda x: (-len(x), x))
@@ -114,12 +107,3 @@ def anagram(data, args):
             words = " ".join(
                 map(lambda x: ",".join(x), (anagrams[s] for s in ss)))
             print(f"{groups}: {words}")
-
-
-def main():
-    args, data = io.parse_args(parser)
-    anagram(data, args)
-
-
-if __name__ == "__main__":
-    main()
