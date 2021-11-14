@@ -6,8 +6,10 @@ import argparse
 import string
 
 import anagram
-import char_counts
 import bifid
+import char_counts
+import dictionary
+import encoding
 import frequency_analysis
 import morse
 import playfair
@@ -34,10 +36,15 @@ parser.add_argument("-l",
 # Subcommands.
 anagram.define_arguments(
     subparsers.add_parser("anagram", help="anagram utilities"))
-char_counts.define_arguments(
-    subparsers.add_parser("counts", help="character counting"))
 bifid.define_arguments(
     subparsers.add_parser("bifid", help="bifid cipher utilities"))
+char_counts.define_arguments(
+    subparsers.add_parser("counts", help="character counting"))
+dictionary.define_arguments(
+    subparsers.add_parser("dict", help="test a word against the dictionary"))
+encoding.define_arguments(
+    subparsers.add_parser("encoding",
+                          help="character encoding transformations"))
 frequency_analysis.define_arguments(
     subparsers.add_parser("fa", help="frequency analysis"))
 morse.define_arguments(

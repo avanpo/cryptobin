@@ -1,22 +1,11 @@
 #!/usr/bin/env python
-
-"""Dictionary tools.
-
-Usage:
-See the --help option for usage information.
-"""
-
-import argparse
+"""Dictionary tools."""
 
 from lib import io
 
-parser = argparse.ArgumentParser(description="dictionary tools")
-parser.add_argument("command", metavar="COMMAND",
-                    help="the command to run. currently supported commands include: test, search")
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the file (string) to test")
-parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
-                    help="the language being analyzed, in ISO 639-1 (default: en)")
+
+def define_arguments(parser):
+    parser.set_defaults(func=dictionary)
 
 
 def load(lang=io.DEFAULT_LANG, filepath=None):
@@ -57,17 +46,5 @@ def test(word, dictionary):
 def dictionary(data, args):
     dictionary = load(lang=args.language)
 
-    if args.command == "test":
-        result = test(data, dictionary)
-        print("true") if result else print("false")
-    else:
-        parser.error("%s command not recognized")
-
-
-def main():
-    args, data = io.parse_args(parser)
-    dictionary(data, args)
-
-
-if __name__ == "__main__":
-    main()
+    result = test(data, dictionary)
+    print("true") if result else print("false")
