@@ -6,6 +6,7 @@ import argparse
 import string
 
 import anagram
+import char_counts
 import bifid
 import frequency_analysis
 import morse
@@ -33,6 +34,8 @@ parser.add_argument("-l",
 # Subcommands.
 anagram.define_arguments(
     subparsers.add_parser("anagram", help="anagram utilities"))
+char_counts.define_arguments(
+    subparsers.add_parser("counts", help="character counting"))
 bifid.define_arguments(
     subparsers.add_parser("bifid", help="bifid cipher utilities"))
 frequency_analysis.define_arguments(
