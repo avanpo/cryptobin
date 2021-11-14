@@ -6,18 +6,19 @@ import argparse
 import string
 
 import anagram
-import bifid
 import char_count
 import dictionary
 import encoding
 import frequency_analysis
 import integer
 import morse
-import playfair
 import roman
 import rot
 import submap
 import tonal
+from ciphers import bifid
+from ciphers import playfair
+from ciphers import vigenere
 from lib import io
 
 parser = argparse.ArgumentParser(description="cryptobin cli tool.")
@@ -63,9 +64,13 @@ submap.define_arguments(
     subparsers.add_parser("submap", help="substitution cipher utilities"))
 tonal.define_arguments(
     subparsers.add_parser("tonal", help="tonal encoding utilities"))
+vigenere.define_arguments(
+    subparsers.add_parser("vigenere", help="vigenere cipher utilities"))
 
 
-def dispatch(data, args):
+def main():
+    args, data = io.parse_args(parser)
+
     if hasattr(args, "func"):
         try:
             args.func(data, args)
@@ -73,11 +78,6 @@ def dispatch(data, args):
             parser.error(e)
     else:
         parser.error("subcommand not recognized, use -h to list subcommands")
-
-
-def main():
-    args, data = io.parse_args(parser)
-    dispatch(data, args)
 
 
 if __name__ == "__main__":

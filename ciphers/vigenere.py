@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 """Vigenere cipher utilities.
 
 Usage:
@@ -32,36 +31,35 @@ possible key length. This is what this tool does. To be effective, a
 sufficiently large ciphertext needs to be provided.
 """
 
-import argparse
-import itertools
-import math
 import string
-import sys
 
 import dictionary
 import plaintext
 import rot
 from lib import io
 
-parser = argparse.ArgumentParser(description=(
-    "vigenere cipher tools. with no arguments this tool attempts to break "
-    "ciphertext by trying every key length. this tool ignores whitespace "
-    "and all punctuation, only letter positiions relative to each other "
-    "are used. any newlines in the file are assumed to reset the key."))
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the ciphertext file to be analyzed")
-parser.add_argument("-i", "--min-length", type=int, default=2,
-                    help="the minimum key length to try (default: 2)")
-parser.add_argument("-m", "--max-length", type=int, default=10,
-                    help="the maximum key length to try (default: 10)")
-parser.add_argument("-k", "--key", action="store_true",
-                    help="recover the encryption key")
-parser.add_argument("-n", "--number", type=int, default=1,
-                    help="number of results to show (default: 1)")
-parser.add_argument("-l", "--language", type=str,
-                    default=io.DEFAULT_LANG,
-                    help=("the language being analyzed, in ISO 639-1 "
-                          "(default: en)"))
+
+def define_arguments(parser):
+    parser.set_defaults(func=vigenere, lines=True)
+    parser.add_argument("-i",
+                        "--min-length",
+                        type=int,
+                        default=2,
+                        help="the minimum key length to try (default: 2)")
+    parser.add_argument("-m",
+                        "--max-length",
+                        type=int,
+                        default=10,
+                        help="the maximum key length to try (default: 10)")
+    parser.add_argument("-k",
+                        "--key",
+                        action="store_true",
+                        help="recover the encryption key")
+    parser.add_argument("-n",
+                        "--number",
+                        type=int,
+                        default=1,
+                        help="number of results to show (default: 1)")
 
 
 def strstrip(data):
@@ -95,6 +93,9 @@ def stagger_join(data, parts):
 def bruteforce(data, min_length=2, max_length=10, lang=io.DEFAULT_LANG):
     """Attempt to bruteforce the solution to a Vigenere ciphertext.
 
+    This is done by trying every key length. Whitespace and all punctuation are
+    ignored, only letter positions relative to each other are used.
+
     Newlines are assumed to 'reset' the key.
 
     Args:
@@ -123,12 +124,14 @@ def bruteforce(data, min_length=2, max_length=10, lang=io.DEFAULT_LANG):
         wc = plaintext.count_words(words, sol)
         sols.append((sol, "".join(key), wc))
 
-    return [(s, k) for s, k, wc
-            in sorted(sols, key=lambda x: x[2], reverse=True)]
+    return [(s, k)
+            for s, k, wc in sorted(sols, key=lambda x: x[2], reverse=True)]
 
 
 def vigenere(data, args):
-    sols = bruteforce(data, args.min_length, args.max_length,
+    sols = bruteforce(data,
+                      args.min_length,
+                      args.max_length,
                       lang=args.language)
     if args.key:
         for sol in sols[:args.number]:
@@ -136,12 +139,3 @@ def vigenere(data, args):
     else:
         for sol in sols[:args.number]:
             print(sols[0][0], end="")
-
-
-def main():
-    args, data = io.parse_args(parser, lines=True)
-    vigenere(data, args)
-
-
-if __name__ == "__main__":
-    main()

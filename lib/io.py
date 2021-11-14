@@ -21,8 +21,15 @@ def read_file(filepath, lines=False, encoding="UTF-8"):
         sys.exit()
 
 
-def parse_args(parser, lines=False, need_file=True):
+def parse_args(parser, need_file=True):
     args = parser.parse_args()
+
+    # Some utilities want to read files as lines rather than a blob. They can
+    # do this by setting a default arg for 'lines'.
+    lines = False
+    if hasattr(args, "lines"):
+        lines = args.lines
+
     if args.file:
         data = read_file(args.file, lines)
     elif not sys.stdin.isatty():

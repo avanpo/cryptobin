@@ -1,20 +1,38 @@
 # cryptobin
 
-A suite of crypto and puzzle tools. The project aims to provide utils that can be imported as python modules to quickly solve unique problems, but also be used on the command line.
+A suite of classical crypto and puzzle tools.
 
-### tools
+The project aims to provide utils that can be imported as python modules to
+quickly solve unique problems, but also be used on the command line via
+cryptobin.py.
 
-* **cdiff.py** [-h] [-i] FILE FILE [FILE ...]
-  * character diff utils
-* **ciphertext.py** [-h] [-l LANGUAGE] COMMAND [FILE]
-  * **fa** analyze letter frequency for alphabetic ciphers
-  * **counts** count char types
-* **plaintext.py** [-h] [-l LANGUAGE] [-d DICTIONARY] COMMAND [FILE]
-  * **fa** calculate standard deviation from language letter frequences
-  * **wc** approximate word count in plaintext body
-* **rot.py** [-h] [-k KEY] [-n NUMBER] [-l LANGUAGE] [FILE]
-  * solves the caesar cipher, or rotates text by a given key
-* **submap.py** [-h] [-d DEPTH] [-e LETTER_DEPTH] [-l LANGUAGE] [-r REPLACE] [FILE]
-  * solves simple monoalphabetic substitution ciphers, or swaps letters
-* **vigenere.py** [-h] [-i MIN_LENGTH] [-m MAX_LENGTH] [-k] [-n NUMBER] [-l LANGUAGE] [FILE]
-  * breaks the vigenere cipher
+## use
+
+```
+usage: cryptobin.py [-h] [-l LANGUAGE] SUBCOMMAND ... [FILE]
+
+cryptobin cli tool.
+
+positional arguments:
+  SUBCOMMAND
+    anagram             anagram utilities
+    bifid               bifid cipher utilities
+    count               character counting
+    dict                test a word against the dictionary
+    encoding            character encoding transformations
+    fa                  frequency analysis
+    int                 integer sequence analysis
+    morse               morse encoding utilities
+    playfair            playfair cipher utilities
+    roman               roman numeral encoding utilities
+    rot                 text rotation (e.g. ROT13) utilities
+    submap              substitution cipher utilities
+    tonal               tonal encoding utilities
+  FILE                  the input to be processed
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -l LANGUAGE, --language LANGUAGE
+                        the language being analyzed, in ISO 639-1 (default:
+                        en)
+```
