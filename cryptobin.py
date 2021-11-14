@@ -7,7 +7,7 @@ import string
 
 import anagram
 import bifid
-import char_counts
+import char_count
 import dictionary
 import encoding
 import frequency_analysis
@@ -15,6 +15,7 @@ import morse
 import playfair
 import roman
 import rot
+import submap
 import tonal
 from lib import io
 
@@ -38,8 +39,8 @@ anagram.define_arguments(
     subparsers.add_parser("anagram", help="anagram utilities"))
 bifid.define_arguments(
     subparsers.add_parser("bifid", help="bifid cipher utilities"))
-char_counts.define_arguments(
-    subparsers.add_parser("counts", help="character counting"))
+char_count.define_arguments(
+    subparsers.add_parser("count", help="character counting"))
 dictionary.define_arguments(
     subparsers.add_parser("dict", help="test a word against the dictionary"))
 encoding.define_arguments(
@@ -55,6 +56,8 @@ roman.define_arguments(
     subparsers.add_parser("roman", help="roman numeral encoding utilities"))
 rot.define_arguments(
     subparsers.add_parser("rot", help="text rotation (e.g. ROT13) utilities"))
+submap.define_arguments(
+    subparsers.add_parser("submap", help="substitution cipher utilities"))
 tonal.define_arguments(
     subparsers.add_parser("tonal", help="tonal encoding utilities"))
 
