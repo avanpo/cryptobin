@@ -1,29 +1,26 @@
 #!/usr/bin/env python
 """Integer and integer sequence utilities."""
 
-import argparse
 import statistics
-import string
 from sympy import ntheory
 
 from lib import io
 
-parser = argparse.ArgumentParser(description=("integer tools."))
-parser.add_argument("file",
-                    metavar="FILE",
-                    nargs="?",
-                    help="the file to be analyzed")
-parser.add_argument(
-    "-s",
-    "--step",
-    action="store_true",
-    default=False,
-    help="calculate step between sequence elements (default: false)")
-parser.add_argument("-x",
-                    "--sort",
-                    action="store_true",
-                    default=False,
-                    help="sort the output of the sequence (default: false)")
+
+def define_arguments(parser):
+    parser.set_defaults(func=integer)
+    parser.add_argument(
+        "-s",
+        "--step",
+        action="store_true",
+        default=False,
+        help="Calculate steps between sequence elements. Default: false.")
+    parser.add_argument(
+        "-x",
+        "--sort",
+        action="store_true",
+        default=False,
+        help="Sort the output of the sequence. Default: false.")
 
 
 def digit(i, n):
@@ -36,7 +33,7 @@ def digit(i, n):
 
 
 def step(integers):
-    """Return the deltas between each consecutive pair of integers."""
+    """Print the deltas between each consecutive pair of integers."""
     prev = None
     for i in integers:
         if not prev:
@@ -44,11 +41,10 @@ def step(integers):
             continue
         print("%s " % (i - prev), end='')
         prev = i
+    print()
 
 
-def integer(integers, sort=False):
-    if sort:
-        integers = sorted(integers)
+def sequence_stats(integers):
     product = 1
     num_factors = 0
     for i in integers:
@@ -71,16 +67,12 @@ def integer(integers, sort=False):
     print(f"Min/median/max:   {si[0]}/{median}/{si[-1]}")
 
 
-def main():
-    args, data = io.parse_args(parser)
+def integer(data, args):
     integers = io.parse_int_list(data)
+    if args.sort:
+        integers = sorted(integers)
+
     if args.step:
-        if args.sort:
-            raise NotImplementedError
         step(integers)
     else:
-        integer(integers, args.sort)
-
-
-if __name__ == "__main__":
-    main()
+        sequence_stats(integers)

@@ -11,6 +11,7 @@ import char_count
 import dictionary
 import encoding
 import frequency_analysis
+import integer
 import morse
 import playfair
 import roman
@@ -48,6 +49,8 @@ encoding.define_arguments(
                           help="character encoding transformations"))
 frequency_analysis.define_arguments(
     subparsers.add_parser("fa", help="frequency analysis"))
+integer.define_arguments(
+    subparsers.add_parser("int", help="integer sequence analysis"))
 morse.define_arguments(
     subparsers.add_parser("morse", help="morse encoding utilities"))
 playfair.define_arguments(
