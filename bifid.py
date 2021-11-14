@@ -1,20 +1,21 @@
 #!/usr/bin/env python
-
 """Bifid cipher utilities."""
 
-import argparse
 import string
 
-from lib import io
 
-parser = argparse.ArgumentParser(description=(
-    "bifid cipher utilities."))
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the file to be analyzed")
-parser.add_argument("-k", "--key", type=str,
-                    help="the cipher key")
-parser.add_argument("-d", "--decrypt", action="store_true", default=False,
-                    help="decrypt instead of encrypt")
+def define_arguments(parser):
+    parser.set_defaults(func=bifid)
+    parser.add_argument("-k",
+                        "--key",
+                        type=str,
+                        required=True,
+                        help="the cipher key")
+    parser.add_argument("-d",
+                        "--decrypt",
+                        action="store_true",
+                        default=False,
+                        help="decrypt instead of encrypt")
 
 
 def build_maps(key):
@@ -77,7 +78,8 @@ def encrypt(key, text, decrypt=False):
     # Combine lists.
     if decrypt:
         z = [x for pair in zip(rows, cols) for x in pair]
-        combined = (x for pair in zip(z[: len(z) // 2], z[len(z) // 2 :]) for x in pair)
+        combined = (x for pair in zip(z[:len(z) // 2], z[len(z) // 2:])
+                    for x in pair)
     else:
         combined = iter(rows + cols)
 
@@ -95,12 +97,3 @@ def bifid(data, args):
         print(encrypt(args.key, data, decrypt=True))
     else:
         print(encrypt(args.key, data, decrypt=False))
-
-
-def main():
-    args, data = io.parse_args(parser)
-    bifid(data, args)
-
-
-if __name__ == "__main__":
-    main()

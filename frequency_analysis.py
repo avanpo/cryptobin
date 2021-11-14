@@ -4,6 +4,7 @@ import plaintext
 
 
 def define_arguments(parser):
+    parser.set_defaults(func=fa)
     parser.add_argument(
         "-n",
         "--ngram",

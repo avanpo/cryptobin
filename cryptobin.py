@@ -5,6 +5,7 @@
 import argparse
 import string
 
+import bifid
 import frequency_analysis
 from lib import io
 
@@ -24,6 +25,8 @@ parser.add_argument("-l",
                     "en)")
 
 # Subcommands.
+bifid.define_arguments(
+    subparsers.add_parser('bifid', help="bifid cipher utilities"))
 frequency_analysis.define_arguments(
     subparsers.add_parser('fa', help="frequency analysis"))
 
