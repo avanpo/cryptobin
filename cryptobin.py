@@ -9,8 +9,7 @@ import frequency_analysis
 from lib import io
 
 parser = argparse.ArgumentParser(description="cryptobin cli tool.")
-subparsers = parser.add_subparsers(metavar="SUBCOMMAND",
-                                   help='subcommand help')
+subparsers = parser.add_subparsers(metavar="SUBCOMMAND")
 
 # Common arguments.
 parser.add_argument("file",
@@ -30,10 +29,13 @@ frequency_analysis.define_arguments(
 
 
 def dispatch(data, args):
-    if args.func:
-        args.func(data, args)
+    if hasattr(args, "func"):
+        try:
+            args.func(data, args)
+        except ValueError as e:
+            parser.error(e)
     else:
-        parser.error("command not recognized")
+        parser.error("subcommand not recognized, use -h to list subcommands")
 
 
 def main():
