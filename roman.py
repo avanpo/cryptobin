@@ -13,7 +13,7 @@ def define_arguments(parser):
                         help="translate numerals to integers")
 
 
-ROMAN = [
+_ROMAN = [
     (1000, "M", 0),
     (900, "CM", 3),
     (500, "D", 1),
@@ -33,7 +33,7 @@ ROMAN = [
 def int_to_roman(integer):
     """Convert an integer to a roman numeral string."""
     result = []
-    for arabic, roman, _ in ROMAN:
+    for arabic, roman, _ in _ROMAN:
         factor, integer = divmod(integer, arabic)
         result.append(roman * factor)
         if integer == 0:
@@ -45,7 +45,7 @@ def roman_to_int(numeral):
     """Convert a roman numeral string to an integer."""
     letters = numeral.upper()
     result = 0
-    roman_iter = iter(ROMAN)
+    roman_iter = iter(_ROMAN)
     for arabic, roman, skip in roman_iter:
         found = False
         for _ in range(0, 3):
