@@ -1,22 +1,23 @@
 #!/usr/bin/env python
-
 """Playfair cipher utilities."""
 
-import argparse
 import string
 
 from lib import io
 
-parser = argparse.ArgumentParser(description=("playfair cipher utilities."))
-parser.add_argument("file", metavar="FILE", nargs="?", help="the file to be analyzed")
-parser.add_argument("-k", "--key", type=str, help="the cipher key")
-parser.add_argument(
-    "-d",
-    "--decrypt",
-    action="store_true",
-    default=False,
-    help="decrypt instead of encrypt",
-)
+
+def define_arguments(parser):
+    parser.set_defaults(func=playfair)
+    parser.add_argument("-k",
+                        "--key",
+                        type=str,
+                        required=True,
+                        help="the cipher key")
+    parser.add_argument("-d",
+                        "--decrypt",
+                        action="store_true",
+                        default=False,
+                        help="decrypt (default: encrypt)")
 
 
 def build_maps(key):
@@ -135,12 +136,3 @@ def playfair(data, args):
         print(encrypt(args.key, data, decrypt=True))
     else:
         print(encrypt(args.key, data, decrypt=False))
-
-
-def main():
-    args, data = io.parse_args(parser)
-    playfair(data, args)
-
-
-if __name__ == "__main__":
-    main()

@@ -19,8 +19,8 @@ def read_file(filepath, lines=False, encoding="UTF-8"):
     except EnvironmentError:
         print("=> ERROR: Could not open %s." % filepath)
         sys.exit()
-    
-    
+
+
 def parse_args(parser, lines=False, need_file=True):
     args = parser.parse_args()
     if args.file:

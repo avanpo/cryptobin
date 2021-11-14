@@ -1,27 +1,27 @@
 #!/usr/bin/env python
-
-"""Rotation utilities.
-"""
-
-import argparse
-import sys
+"""Rotation utilities."""
 
 import plaintext
 from lib import io
 
-parser = argparse.ArgumentParser(description=(
-    "text rotation util. without the --key argument, this tool uses frequency "
-    "analysis to find the plaintext."))
-parser.add_argument("file", metavar="FILE", nargs="?",
-                    help="the file to be analyzed")
-parser.add_argument("-k", "--key", type=int,
-                    help="the rotation key (example: 13)")
-parser.add_argument("-n", "--number", type=int, default=3,
-                    help="number of results to show (default: 3)")
-parser.add_argument("-l", "--language", type=str, default=io.DEFAULT_LANG,
-                    help="the language being analyzed, in ISO 639-1 (default: en)")
-parser.add_argument("-c", "--case", type=str, default="all",
-                    help="rotate all|lower|upper|numeric case letters (default: all)")
+
+def define_arguments(parser):
+    parser.set_defaults(func=rot)
+    parser.add_argument("-k",
+                        "--key",
+                        type=int,
+                        help="the rotation key (example: 13)")
+    parser.add_argument("-n",
+                        "--number",
+                        type=int,
+                        default=3,
+                        help="number of results to show (default: 3)")
+    parser.add_argument("-c",
+                        "--case",
+                        type=str,
+                        default="all",
+                        help="rotate all|lower|upper|numeric case letters "
+                        "(default: all)")
 
 
 def rot_char(c, key, case="all"):
@@ -68,7 +68,7 @@ def bruteforce(data, lang=io.DEFAULT_LANG, case="all"):
     for i in range(0, 26):
         text = rotate(data, i, case)
         sols.append((plaintext.std_dev(text, lang), text))
-    
+
     sols.sort(key=lambda x: x[0])
     return [x[1] for x in sols]
 
@@ -82,13 +82,3 @@ def rot(data, args):
         sols = bruteforce(data, args.language, args.case)
         for i in range(0, min(args.number, 26)):
             print(sols[i])
-            print()
-
-
-def main():
-    args, data = io.parse_args(parser)
-    rot(data, args)
-
-
-if __name__ == "__main__":
-    main()

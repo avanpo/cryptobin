@@ -8,7 +8,9 @@ import string
 import bifid
 import frequency_analysis
 import morse
+import playfair
 import roman
+import rot
 import tonal
 from lib import io
 
@@ -34,10 +36,14 @@ frequency_analysis.define_arguments(
     subparsers.add_parser("fa", help="frequency analysis"))
 morse.define_arguments(
     subparsers.add_parser("morse", help="morse encoding utilities"))
-tonal.define_arguments(
-    subparsers.add_parser("tonal", help="tonal encoding utilities"))
+playfair.define_arguments(
+    subparsers.add_parser("playfair", help="playfair cipher utilities"))
 roman.define_arguments(
     subparsers.add_parser("roman", help="roman numeral encoding utilities"))
+rot.define_arguments(
+    subparsers.add_parser("rot", help="text rotation (e.g. ROT13) utilities"))
+tonal.define_arguments(
+    subparsers.add_parser("tonal", help="tonal encoding utilities"))
 
 
 def dispatch(data, args):
