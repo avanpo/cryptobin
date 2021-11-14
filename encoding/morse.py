@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Morse code utilities."""
 
 from lib import io

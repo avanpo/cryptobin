@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Tonal system utilities."""
 
 import string

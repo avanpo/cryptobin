@@ -1,9 +1,4 @@
-#!/usr/bin/env python
 """Vigenere cipher utilities.
-
-Usage:
-
-See the --help option for usage information.
 
 Background:
 

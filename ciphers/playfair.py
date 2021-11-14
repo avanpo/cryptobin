@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Playfair cipher utilities."""
 
 import string

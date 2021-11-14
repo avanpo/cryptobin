@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Bifid cipher utilities."""
 
 import string

@@ -8,17 +8,17 @@ import string
 import anagram
 import char_count
 import dictionary
-import encoding
 import frequency_analysis
 import integer
-import morse
-import roman
 import rot
 import submap
-import tonal
 from ciphers import bifid
 from ciphers import playfair
 from ciphers import vigenere
+from encoding import encoding
+from encoding import morse
+from encoding import roman
+from encoding import tonal
 from lib import io
 
 parser = argparse.ArgumentParser(description="cryptobin cli tool.")

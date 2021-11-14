@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Encoding utilities at char granularity."""
 
 import string
@@ -22,7 +21,7 @@ def define_arguments(parser):
                         "--io",
                         type=str,
                         default="ai",
-                        help="convenience method; 'ai' is alpha in, int out")
+                        help="convenience method; 'ai' is alpha in, int out.")
     parser.add_argument("-0",
                         "--zero-based",
                         action="store_true",
