@@ -9,7 +9,6 @@ import anagram
 import char_count
 import dictionary
 import frequency_analysis
-import integer
 import rot
 import submap
 from ciphers import bifid
@@ -19,6 +18,7 @@ from encoding import encoding
 from encoding import morse
 from encoding import roman
 from encoding import tonal
+from maths import integer
 from lib import io
 
 parser = argparse.ArgumentParser(description="cryptobin cli tool.")
@@ -46,8 +46,7 @@ char_count.define_arguments(
 dictionary.define_arguments(
     subparsers.add_parser("dict", help="test a word against the dictionary"))
 encoding.define_arguments(
-    subparsers.add_parser("encoding",
-                          help="character encoding transformations"))
+    subparsers.add_parser("enc", help="character encoding transformations"))
 frequency_analysis.define_arguments(
     subparsers.add_parser("fa", help="frequency analysis"))
 integer.define_arguments(

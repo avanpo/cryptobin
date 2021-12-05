@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Integer and integer sequence utilities."""
 
 import statistics
