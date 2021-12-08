@@ -9,10 +9,10 @@ import anagram
 import char_count
 import dictionary
 import frequency_analysis
-import rot
-import submap
 from ciphers import bifid
 from ciphers import playfair
+from ciphers import rot
+from ciphers import submap
 from ciphers import vigenere
 from encoding import encoding
 from encoding import morse

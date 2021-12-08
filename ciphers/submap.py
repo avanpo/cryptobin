@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""Substitution map utils. Also known as cryptograms.
-"""
+"""Substitution map utils. Also known as cryptograms."""
 
 import string
 
