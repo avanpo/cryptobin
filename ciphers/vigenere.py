@@ -30,7 +30,7 @@ import string
 
 import dictionary
 import plaintext
-import rot
+from ciphers import rot
 from lib import io
 
 

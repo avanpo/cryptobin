@@ -2,8 +2,6 @@
 
 import string
 
-from lib import io
-
 
 def define_arguments(parser):
     parser.set_defaults(func=playfair)
