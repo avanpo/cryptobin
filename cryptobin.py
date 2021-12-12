@@ -8,7 +8,7 @@ import string
 import anagram
 import char_count
 import dictionary
-import frequency_analysis
+from analysis import frequency
 from ciphers import bifid
 from ciphers import playfair
 from ciphers import rot
@@ -47,7 +47,7 @@ dictionary.define_arguments(
     subparsers.add_parser("dict", help="test a word against the dictionary"))
 encoding.define_arguments(
     subparsers.add_parser("enc", help="character encoding transformations"))
-frequency_analysis.define_arguments(
+frequency.define_arguments(
     subparsers.add_parser("fa", help="frequency analysis"))
 integer.define_arguments(
     subparsers.add_parser("int", help="integer sequence analysis"))
