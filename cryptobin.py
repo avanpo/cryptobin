@@ -5,9 +5,7 @@
 import argparse
 import string
 
-import anagram
 import char_count
-import dictionary
 from analysis import frequency
 from ciphers import bifid
 from ciphers import playfair
@@ -18,6 +16,8 @@ from encoding import encoding
 from encoding import morse
 from encoding import roman
 from encoding import tonal
+from language import anagram
+from language import words
 from maths import integer
 from lib import io
 
@@ -43,8 +43,6 @@ bifid.define_arguments(
     subparsers.add_parser("bifid", help="bifid cipher utilities"))
 char_count.define_arguments(
     subparsers.add_parser("count", help="character counting"))
-dictionary.define_arguments(
-    subparsers.add_parser("dict", help="test a word against the dictionary"))
 encoding.define_arguments(
     subparsers.add_parser("enc", help="character encoding transformations"))
 frequency.define_arguments(
@@ -65,6 +63,7 @@ tonal.define_arguments(
     subparsers.add_parser("tonal", help="tonal encoding utilities"))
 vigenere.define_arguments(
     subparsers.add_parser("vigenere", help="vigenere cipher utilities"))
+words.define_arguments(subparsers.add_parser("words", help="word utilities"))
 
 
 def main():

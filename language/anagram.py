@@ -1,9 +1,7 @@
-#!/usr/bin/env python
-
 import itertools
 import string
 
-import dictionary
+from language import dictionary
 from lib import io
 
 

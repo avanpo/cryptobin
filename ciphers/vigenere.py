@@ -28,9 +28,9 @@ sufficiently large ciphertext needs to be provided.
 
 import string
 
-import dictionary
 import plaintext
 from ciphers import rot
+from language import dictionary
 from lib import io
 
 

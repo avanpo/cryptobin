@@ -3,7 +3,7 @@
 
 import string
 
-import dictionary
+from language import dictionary
 import plaintext
 from lib import io
 

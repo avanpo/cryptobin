@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 """Plaintext utilities.
 
 Usage:
@@ -14,7 +13,7 @@ import os
 import string
 import sys
 
-import dictionary
+from language import dictionary
 from lib import io
 
 parser = argparse.ArgumentParser(description="plaintext tools")
@@ -23,9 +22,10 @@ parser.add_argument(
     metavar="COMMAND",
     help="the command to run. currently supported commands include: fa, wc",
 )
-parser.add_argument(
-    "file", metavar="FILE", nargs="?", help="the plaintext file to be analyzed"
-)
+parser.add_argument("file",
+                    metavar="FILE",
+                    nargs="?",
+                    help="the plaintext file to be analyzed")
 parser.add_argument(
     "-l",
     "--language",
@@ -148,7 +148,7 @@ def std_dev(data, lang=io.DEFAULT_LANG):
 
     variance = 0.0
     for c in string.ascii_lowercase:
-        variance += (lang_freq[c] - observed_freq[c]) ** 2
+        variance += (lang_freq[c] - observed_freq[c])**2
 
     return math.sqrt(variance)
 
@@ -175,10 +175,10 @@ def count_words(words, data, n=3, verbose=False):
     i = 0
     while i < len(data):
         for l in range(min(11, len(data) - i), n - 1, -1):
-            if data[i : i + l].lower() in words:
+            if data[i:i + l].lower() in words:
                 count += 1
                 if verbose:
-                    print(">", data[i : i + l].lower())
+                    print(">", data[i:i + l].lower())
                 i += l - 1
                 break
         i += 1
