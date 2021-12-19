@@ -87,7 +87,8 @@ def print_fa(observed_freq, lang_freq, doubles=False):
         lang = list(filter(lambda s: len(s) == 2 and s[0] == s[1], lang))
     rows = 0
     for o, l in zip(observed, lang):
-        print(f"   {o:3} ({observed_freq[o]:.4})  | {l:3} ({lang_freq[l]:.4})")
+        print(
+            f"   {o:3} ({observed_freq[o]:.4f})  | {l:3} ({lang_freq[l]:.4f})")
         rows += 1
         if rows > 30:
             break

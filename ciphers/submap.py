@@ -149,6 +149,7 @@ def bruteforce(data, depth, letter_depth=18, lang=io.DEFAULT_LANG):
 
 
 def submap(data, args):
+    data = data.strip().lower()
     if args.replace:
         replacements = args.replace.split(",")
         if any(len(r) != 2 for r in replacements):
