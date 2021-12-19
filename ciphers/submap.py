@@ -1,11 +1,9 @@
-#!/usr/bin/env python
 """Substitution map utils. Also known as cryptograms."""
 
 import string
 
 from language import dictionary
 import plaintext
-from lib import io
 
 
 def define_arguments(parser):
@@ -114,7 +112,7 @@ def replace(data, replacements):
     return result
 
 
-def bruteforce(data, depth, letter_depth=18, lang=io.DEFAULT_LANG):
+def bruteforce(data, depth, letter_depth=18, lang=dictionary.DEFAULT_LANG):
     """Recover the plaintext from a ciphertext using a letter
     substitution map.
 

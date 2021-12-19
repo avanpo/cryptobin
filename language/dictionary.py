@@ -2,8 +2,10 @@
 
 from lib import io
 
+DEFAULT_LANG = "en"
 
-def load(lang=io.DEFAULT_LANG, filepath=None):
+
+def load(lang=DEFAULT_LANG, filepath=None):
     """Load the specified language's dictionary.
 
     Args:
@@ -17,9 +19,9 @@ def load(lang=io.DEFAULT_LANG, filepath=None):
         filepath = io.get_lang_filepath("words", lang)
 
     data = io.read_file(filepath, lines=True)
-    dictionary = set()
+    d = set()
     for line in data:
         word = line.strip().lower().replace('-', '').replace(' ', '')
-        dictionary.add(word)
+        d.add(word)
 
-    return dictionary
+    return d

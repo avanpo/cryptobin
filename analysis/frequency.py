@@ -3,6 +3,7 @@
 import collections
 import string
 
+from language import dictionary
 from lib import io
 
 
@@ -61,7 +62,7 @@ def letter_ngram_frequencies(data, n=1):
     return {k: v / num_ngrams for k, v in result.items()}
 
 
-def load_frequencies(lang=io.DEFAULT_LANG, n=1):
+def load_frequencies(lang=dictionary.DEFAULT_LANG, n=1):
     filepath = io.get_lang_filepath("freq", lang)
     if n == 2:
         filepath = io.get_lang_filepath("digram_freq", lang)

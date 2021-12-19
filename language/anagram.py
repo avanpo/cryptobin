@@ -2,7 +2,6 @@ import itertools
 import string
 
 from language import dictionary
-from lib import io
 
 
 def define_arguments(parser):
@@ -24,7 +23,7 @@ def define_arguments(parser):
                         help="also search subsets")
 
 
-def load_anagrams(lang=io.DEFAULT_LANG):
+def load_anagrams(lang=dictionary.DEFAULT_LANG):
     """Get a dictionary of sorted strings to list of anagrams."""
     words = dictionary.load(lang=lang)
     anagrams = {}

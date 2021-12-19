@@ -31,7 +31,6 @@ import string
 import plaintext
 from ciphers import rot
 from language import dictionary
-from lib import io
 
 
 def define_arguments(parser):
@@ -85,7 +84,10 @@ def stagger_join(data, parts):
     return "".join(output)
 
 
-def bruteforce(data, min_length=2, max_length=10, lang=io.DEFAULT_LANG):
+def bruteforce(data,
+               min_length=2,
+               max_length=10,
+               lang=dictionary.DEFAULT_LANG):
     """Attempt to bruteforce the solution to a Vigenere ciphertext.
 
     This is done by trying every key length. Whitespace and all punctuation are

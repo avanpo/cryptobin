@@ -1,8 +1,7 @@
-#!/usr/bin/env python
 """Rotation utilities."""
 
 import plaintext
-from lib import io
+from language import dictionary
 
 
 def define_arguments(parser):
@@ -52,7 +51,7 @@ def rotate(data, key, case="all"):
     return "".join(text)
 
 
-def bruteforce(data, lang=io.DEFAULT_LANG, case="all"):
+def bruteforce(data, lang=dictionary.DEFAULT_LANG, case="all"):
     """Attempt to recover the plaintext using frequency analysis.
 
     Args:

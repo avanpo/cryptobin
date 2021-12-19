@@ -32,7 +32,7 @@ parser.add_argument("file",
 parser.add_argument("-l",
                     "--language",
                     type=str,
-                    default=io.DEFAULT_LANG,
+                    default=dictionary.dictionary,
                     help="the language being analyzed, in ISO 639-1 (default: "
                     "en)")
 
