@@ -30,7 +30,7 @@ parser.add_argument(
     "-l",
     "--language",
     type=str,
-    default=io.DEFAULT_LANG,
+    default=dictionary.DEFAULT_LANG,
     help="the language being analyzed, in ISO 639-1 (default: en)",
 )
 parser.add_argument(
@@ -54,10 +54,10 @@ parser.add_argument(
 )
 
 
-def load_freqs(lang=io.DEFAULT_LANG, n=1):
-    filepath = io.get_lang_filepath("freq", lang)
+def load_freqs(lang=dictionary.DEFAULT_LANG, n=1):
+    filepath = dictionary.get_lang_filepath("freq", lang)
     if n == 2:
-        filepath = io.get_lang_filepath("digram_freq", lang)
+        filepath = dictionary.get_lang_filepath("digram_freq", lang)
 
     data = io.read_file(filepath, lines=True)
     freqs = {}
@@ -68,9 +68,9 @@ def load_freqs(lang=io.DEFAULT_LANG, n=1):
     return freqs
 
 
-def load_words(lang=io.DEFAULT_LANG, filepath=None):
+def load_words(lang=dictionary.DEFAULT_LANG, filepath=None):
     if not filepath:
-        filepath = io.get_lang_filepath("all_words", lang)
+        filepath = dictionary.get_lang_filepath("all_words", lang)
 
     data = io.read_file(filepath, lines=True)
     words = set()
@@ -132,7 +132,7 @@ def ngram_frequencies(data, n=1):
     return {k: v / total_ngrams for k, v in result.items()}
 
 
-def std_dev(data, lang=io.DEFAULT_LANG):
+def std_dev(data, lang=dictionary.DEFAULT_LANG):
     """Calculate standard deviation from average letter frequencies.
 
     Args:

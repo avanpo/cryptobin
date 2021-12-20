@@ -9,11 +9,6 @@ def get_data_filepath():
     return os.path.join(lib_dir, "../data/")
 
 
-def get_lang_filepath(prefix, lang):
-    lib_dir = os.path.dirname(__file__)
-    return os.path.join(lib_dir, "../lang/%s_%s.txt" % (prefix, lang))
-
-
 def read_file(filepath, lines=False, encoding="UTF-8"):
     try:
         with open(filepath) as f:
@@ -22,7 +17,7 @@ def read_file(filepath, lines=False, encoding="UTF-8"):
             else:
                 return f.read()
     except EnvironmentError:
-        print("=> ERROR: Could not open %s." % filepath)
+        print(f"=> ERROR: Could not open {filepath}.", file=sys.stderr)
         sys.exit()
 
 
