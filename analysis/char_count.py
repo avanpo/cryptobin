@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """Character counting util."""
 
 import collections
@@ -46,7 +45,7 @@ def counts_all(data):
             largest_count = counts[c]
     count_width = len(str(largest_count))
 
-    print("=> Character class counts")
+    print("=> Character counts")
     for c, count in sorted(counts.items()):
         representation = c
         if c == "\n":

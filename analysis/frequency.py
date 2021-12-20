@@ -1,4 +1,4 @@
-"""Char analysis."""
+"""Character frequency analysis."""
 
 import collections
 import string

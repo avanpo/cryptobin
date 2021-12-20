@@ -5,7 +5,7 @@
 import argparse
 import string
 
-import char_count
+from analysis import char_count
 from analysis import frequency
 from ciphers import bifid
 from ciphers import playfair
