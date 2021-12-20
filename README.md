@@ -18,8 +18,7 @@ positional arguments:
     anagram             anagram utilities
     bifid               bifid cipher utilities
     count               character counting
-    dict                test a word against the dictionary
-    encoding            character encoding transformations
+    enc                 character encoding transformations
     fa                  frequency analysis
     int                 integer sequence analysis
     morse               morse encoding utilities
@@ -28,6 +27,8 @@ positional arguments:
     rot                 text rotation (e.g. ROT13) utilities
     submap              substitution cipher utilities
     tonal               tonal encoding utilities
+    vigenere            vigenere cipher utilities
+    words               word utilities
   FILE                  the input to be processed
 
 optional arguments:
@@ -35,4 +36,12 @@ optional arguments:
   -l LANGUAGE, --language LANGUAGE
                         the language being analyzed, in ISO 639-1 (default:
                         en)
+```
+
+## tests
+
+In the root directory, run:
+
+```
+python -m unittest
 ```
