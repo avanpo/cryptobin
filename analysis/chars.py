@@ -46,7 +46,7 @@ def counts_summary(data):
 
 def counts_all(data):
     counts = count_chars(data)
-    count_width = len(str(max(counts, key=counts.get)))
+    count_width = len(str(max(counts.values())))
 
     print("=> Character counts")
     for c, count in sorted(counts.items()):
