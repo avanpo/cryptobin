@@ -63,9 +63,9 @@ def letter_ngram_frequencies(data, n=1):
 
 
 def load_frequencies(lang=dictionary.DEFAULT_LANG, n=1):
-    filepath = io.get_lang_filepath("freq", lang)
+    filepath = dictionary.get_lang_filepath("freq", lang)
     if n == 2:
-        filepath = io.get_lang_filepath("digram_freq", lang)
+        filepath = dictionary.get_lang_filepath("digram_freq", lang)
 
     data = io.read_file(filepath, lines=True)
     freqs = {}

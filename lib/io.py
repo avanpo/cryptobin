@@ -4,6 +4,11 @@ import sys
 DEFAULT_LANG = "en"
 
 
+def get_data_filepath():
+    lib_dir = os.path.dirname(__file__)
+    return os.path.join(lib_dir, "../data/")
+
+
 def get_lang_filepath(prefix, lang):
     lib_dir = os.path.dirname(__file__)
     return os.path.join(lib_dir, "../lang/%s_%s.txt" % (prefix, lang))
