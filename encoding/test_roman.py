@@ -1,6 +1,6 @@
 import unittest
 
-import roman
+from encoding import roman
 
 
 class TestRoman(unittest.TestCase):

@@ -1,22 +1,12 @@
 import string
 import unittest
 
-import frequency
+from analysis import frequency
 
 _TEST_DATA = "aaa0 ba\nacba"
 
 
 class TestFrequency(unittest.TestCase):
-    def test_count_chars(self):
-        self.assertEqual(frequency.count_chars(_TEST_DATA), {
-            "a": 6,
-            "0": 1,
-            " ": 1,
-            "b": 2,
-            "c": 1,
-            "\n": 1,
-        })
-
     def test_count_letters(self):
         expected = {l: 0 for l in string.ascii_lowercase}
         expected["a"] = 6
