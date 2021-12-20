@@ -4,7 +4,7 @@ import string
 
 from analysis import frequency
 from language import dictionary
-import plaintext
+from language import words
 
 
 def define_arguments(parser):
@@ -59,14 +59,14 @@ class SubMapSearch:
         self.seen = set()
 
 
-def analyze_order(words, s, letter_order, depth):
+def analyze_order(word_set, s, letter_order, depth):
     letter_map = {k: v for k, v in zip(letter_order, s.lang_order)}
     pt = "".join([
         letter_map[c.lower()] if c in string.ascii_letters else c
         for c in s.data
     ])
 
-    num_words = plaintext.count_words(words, pt)
+    num_words = words.count_words(word_set, pt)
     if num_words > s.best:
         s.best = num_words
         s.plaintexts.append(pt)
@@ -79,7 +79,7 @@ def analyze_order(words, s, letter_order, depth):
         new_order[i], new_order[i + 1] = new_order[i + 1], new_order[i]
         if "".join(new_order) not in s.seen:
             s.seen.add("".join(new_order))
-            analyze_order(words, s, new_order, depth - 1)
+            analyze_order(word_set, s, new_order, depth - 1)
 
 
 def substitute(data, r1, r2):

@@ -28,9 +28,9 @@ sufficiently large ciphertext needs to be provided.
 
 import string
 
-import plaintext
 from ciphers import rot
 from language import dictionary
+from language import words
 
 
 def define_arguments(parser):
@@ -118,7 +118,7 @@ def bruteforce(data,
             key_char = chr((26 + ord(s[0]) - ord(part_sols[0][0])) % 26 + 65)
             key.append(key_char)
         sol = stagger_join(data, parts)
-        wc = plaintext.count_words(words, sol)
+        wc = words.count_words(words, sol)
         sols.append((sol, "".join(key), wc))
 
     return [(s, k)
