@@ -40,13 +40,25 @@ def load_frequencies(lang=dictionary.DEFAULT_LANG, n=1):
     return freqs
 
 
+def distance(data, lang=dictionary.DEFAULT_LANG, n=1):
+    """Calculate the 'distance' from average n-gram frequencies."""
+    lang_freq = load_frequencies(lang=lang, n=n)
+    observed_freq = calc_frequencies(data, n=n)
+
+    d = 0.0
+    for c in string.ascii_lowercase:
+        d += (lang_freq[c] - observed_freq[c])**2
+
+    return math.sqrt(d)
+
+
 def count_letters(data):
     """Returns a dictionary of lowercase letter to count."""
     counts = chars.count_chars(data)
     return {l: counts[l] + counts[l.upper()] for l in string.ascii_lowercase}
 
 
-def letter_ngram_frequencies(data, n=1):
+def calc_frequencies(data, n=1):
     """Returns a dictionary of lowercase letter n-gram to frequency."""
     data = data.lower()
     letters = set(string.ascii_lowercase)
@@ -95,6 +107,6 @@ def fa(data, args):
         raise ValueError(
             "--doubles (restricting to double digrams requires --ngram=2")
 
-    observed_freq = letter_ngram_frequencies(data, n=args.ngram)
+    observed_freq = calc_frequencies(data, n=args.ngram)
     lang_freq = load_frequencies(args.language, n=args.ngram)
     print_fa(observed_freq, lang_freq, doubles=args.doubles)

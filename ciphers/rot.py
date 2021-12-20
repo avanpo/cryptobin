@@ -1,6 +1,6 @@
 """Rotation utilities."""
 
-import plaintext
+from analysis import frequency
 from language import dictionary
 
 
@@ -66,7 +66,7 @@ def bruteforce(data, lang=dictionary.DEFAULT_LANG, case="all"):
     sols = []
     for i in range(0, 26):
         text = rotate(data, i, case)
-        sols.append((plaintext.std_dev(text, lang), text))
+        sols.append((frequency.distance(text, lang), text))
 
     sols.sort(key=lambda x: x[0])
     return [x[1] for x in sols]

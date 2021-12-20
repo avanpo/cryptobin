@@ -14,16 +14,14 @@ class TestFrequency(unittest.TestCase):
         expected["c"] = 1
         self.assertEqual(frequency.count_letters(_TEST_DATA), expected)
 
-    def test_letter_frequencies(self):
+    def test_calc_frequencies(self):
         expected = {"a": 6 / 9, "b": 2 / 9, "c": 1 / 9}
 
-        self.assertEqual(frequency.letter_ngram_frequencies(_TEST_DATA, 1),
-                         expected)
-        self.assertEqual(frequency.letter_ngram_frequencies(_TEST_DATA),
-                         expected)
+        self.assertEqual(frequency.calc_frequencies(_TEST_DATA, 1), expected)
+        self.assertEqual(frequency.calc_frequencies(_TEST_DATA), expected)
 
-    def test_letter_ngram_frequencies(self):
-        self.assertEqual(frequency.letter_ngram_frequencies(_TEST_DATA, 2), {
+    def test_calc_frequencies_digrams(self):
+        self.assertEqual(frequency.calc_frequencies(_TEST_DATA, 2), {
             "aa": 0.375,
             "ab": 0.125,
             "ba": 0.25,
