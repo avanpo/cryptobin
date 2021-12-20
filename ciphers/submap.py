@@ -2,6 +2,7 @@
 
 import string
 
+from analysis import frequency
 from language import dictionary
 import plaintext
 
@@ -32,7 +33,7 @@ def define_arguments(parser):
 
 
 def calc_observed_freq(data):
-    counts = plaintext.count_letters(data)
+    counts = frequency.count_letters(data)
     n = float(sum(counts.values()))
     return {k: c / n for k, c in counts.items()}
 
@@ -134,7 +135,7 @@ def bruteforce(data, depth, letter_depth=18, lang=dictionary.DEFAULT_LANG):
         An ordered list of plausible substitution maps.
     """
     observed_freq = calc_observed_freq(data)
-    lang_freq = plaintext.load_freqs(lang)
+    lang_freq = frequency.load_frequencies(lang)
     search = SubMapSearch(data, observed_freq, lang_freq)
 
     observed_order = generate_observed_order(observed_freq)

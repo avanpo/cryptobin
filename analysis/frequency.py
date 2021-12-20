@@ -3,6 +3,7 @@
 import collections
 import string
 
+from analysis import chars
 from language import dictionary
 from lib import io
 
@@ -25,17 +26,23 @@ def define_arguments(parser):
     )
 
 
-def count_chars(data):
-    """Returns a dictionary of char to count."""
-    counts = collections.defaultdict(int)
-    for c in data:
-        counts[c] += 1
-    return counts
+def load_frequencies(lang=dictionary.DEFAULT_LANG, n=1):
+    filepath = dictionary.get_lang_filepath("freq", lang)
+    if n == 2:
+        filepath = dictionary.get_lang_filepath("digram_freq", lang)
+
+    data = io.read_file(filepath, lines=True)
+    freqs = {}
+    for line in data:
+        c, val = line.strip().split()
+        freqs[c] = float(val)
+
+    return freqs
 
 
 def count_letters(data):
     """Returns a dictionary of lowercase letter to count."""
-    counts = count_chars(data)
+    counts = chars.count_chars(data)
     return {l: counts[l] + counts[l.upper()] for l in string.ascii_lowercase}
 
 
@@ -60,20 +67,6 @@ def letter_ngram_frequencies(data, n=1):
             result["".join(ngram)] += 1
 
     return {k: v / num_ngrams for k, v in result.items()}
-
-
-def load_frequencies(lang=dictionary.DEFAULT_LANG, n=1):
-    filepath = dictionary.get_lang_filepath("freq", lang)
-    if n == 2:
-        filepath = dictionary.get_lang_filepath("digram_freq", lang)
-
-    data = io.read_file(filepath, lines=True)
-    freqs = {}
-    for line in data:
-        c, val = line.strip().split()
-        freqs[c] = float(val)
-
-    return freqs
 
 
 def print_fa(observed_freq, lang_freq, doubles=False):

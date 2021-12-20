@@ -5,7 +5,7 @@
 import argparse
 import string
 
-from analysis import char_count
+from analysis import chars
 from analysis import frequency
 from ciphers import bifid
 from ciphers import playfair
@@ -42,7 +42,7 @@ anagram.define_arguments(
     subparsers.add_parser("anagram", help="anagram utilities"))
 bifid.define_arguments(
     subparsers.add_parser("bifid", help="bifid cipher utilities"))
-char_count.define_arguments(
+chars.define_arguments(
     subparsers.add_parser("count", help="character counting"))
 encoding.define_arguments(
     subparsers.add_parser("enc", help="character encoding transformations"))

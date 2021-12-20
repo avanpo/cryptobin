@@ -15,6 +15,14 @@ def define_arguments(parser):
     )
 
 
+def count_chars(data):
+    """Returns a dictionary of char to count."""
+    counts = collections.defaultdict(int)
+    for c in data:
+        counts[c] += 1
+    return counts
+
+
 def counts_summary(data):
     la, ua, nr, p, w, np = 0, 0, 0, 0, 0, 0
     for c in data:
@@ -37,13 +45,8 @@ def counts_summary(data):
 
 
 def counts_all(data):
-    counts = collections.defaultdict(int)
-    largest_count = 0
-    for c in data:
-        counts[c] += 1
-        if counts[c] > largest_count:
-            largest_count = counts[c]
-    count_width = len(str(largest_count))
+    counts = count_chars(data)
+    count_width = len(str(max(counts, key=counts.get)))
 
     print("=> Character counts")
     for c, count in sorted(counts.items()):
