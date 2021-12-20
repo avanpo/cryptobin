@@ -17,6 +17,7 @@ from encoding import morse
 from encoding import roman
 from encoding import tonal
 from language import anagram
+from language import dictionary
 from language import words
 from maths import integer
 from lib import io
@@ -32,7 +33,7 @@ parser.add_argument("file",
 parser.add_argument("-l",
                     "--language",
                     type=str,
-                    default=dictionary.dictionary,
+                    default=dictionary.DEFAULT_LANG,
                     help="the language being analyzed, in ISO 639-1 (default: "
                     "en)")
 
