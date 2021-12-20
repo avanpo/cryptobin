@@ -1,6 +1,6 @@
 import unittest
 
-import anagram
+from language import anagram
 
 _ANAGRAMS = {"abd": ["bad", "dab"], "abdr": ["bard"]}
 
