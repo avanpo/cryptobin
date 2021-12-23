@@ -1,6 +1,7 @@
 """Character frequency analysis."""
 
 import collections
+import math
 import string
 
 from analysis import chars
@@ -46,8 +47,8 @@ def distance(data, lang=dictionary.DEFAULT_LANG, n=1):
     observed_freq = calc_frequencies(data, n=n)
 
     d = 0.0
-    for c in string.ascii_lowercase:
-        d += (lang_freq[c] - observed_freq[c])**2
+    for ngram in lang_freq.keys():
+        d += (lang_freq[ngram] - observed_freq.get(ngram, 0.0))**2
 
     return math.sqrt(d)
 
